@@ -1,4 +1,8 @@
-import { Check, CircleHelp, ClipboardCheck, ExternalLink, FileText, ShieldCheck } from 'lucide-react';
+import {
+  ArrowRight, BadgeCheck, Check, CircleHelp, ClipboardCheck, ExternalLink,
+  FileText, ShieldCheck, XCircle
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext.jsx';
 
 // Eligibility inputs and results are kept in shared context so scheme cards can preselect a scheme.
@@ -8,6 +12,18 @@ export default function EligibilityPage() {
   const updateField = (field, value) => {
     setForm((current) => ({ ...current, [field]: value }));
     setEligibility(null);
+  };
+
+  const chooseAlternative = (schemeId) => {
+    setForm((current) => ({ ...current, schemeId }));
+    setEligibility(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const resultLabels = {
+    eligible: { title: 'Likely eligible', icon: BadgeCheck, className: 'eligible' },
+    not_eligible: { title: 'Not eligible based on these answers', icon: XCircle, className: 'not-eligible' },
+    needs_verification: { title: 'Needs official verification', icon: CircleHelp, className: 'needs-verification' }
   };
 
   return (
@@ -43,18 +59,58 @@ export default function EligibilityPage() {
 
       {eligibility && (
         <div className="guidance-result" aria-live="polite">
-          {eligibility.error ? <p className="error-text">{eligibility.error}</p> : (
-            <>
-              <div className="result-heading"><div className="result-check"><ClipboardCheck size={20} /></div><div><span className="section-eyebrow">PRELIMINARY GUIDANCE</span><h3>{eligibility.scheme.name}</h3></div></div>
-              <p>{eligibility.summary}</p>
-              <div className="result-columns">
-                <div><h4><Check size={16} />{t.requirements}</h4><ul>{(eligibility.checklist || []).map((item) => <li key={item}>{item}</li>)}</ul></div>
-                <div><h4><FileText size={16} />{t.docs}</h4><ul>{(eligibility.documents || []).map((item) => <li key={item}>{item}</li>)}</ul></div>
-              </div>
-              <div className="result-notes">{(eligibility.notes || []).map((note) => <p key={note}><CircleHelp size={15} />{note}</p>)}</div>
-              <a className="btn-primary inline-btn" href={eligibility.scheme.officialUrl} target="_blank" rel="noreferrer">{t.official}<ExternalLink size={15} /></a>
-            </>
-          )}
+          {eligibility.error ? <p className="error-text">{eligibility.error}</p> : (() => {
+            const status = resultLabels[eligibility.result] || resultLabels.needs_verification;
+            const StatusIcon = status.icon;
+            return (
+              <>
+                <div className={`eligibility-outcome ${status.className}`}>
+                  <div className="outcome-icon"><StatusIcon size={25} /></div>
+                  <div>
+                    <span className="section-eyebrow">YOUR RESULT</span>
+                    <h3>{status.title}</h3>
+                    <p>{eligibility.scheme.name}</p>
+                  </div>
+                </div>
+                <p className="outcome-summary">{eligibility.summary}</p>
+
+                {eligibility.result === 'eligible' && (
+                  <div className="result-columns">
+                    <div><h4><Check size={16} />{t.requirements}</h4><ul>{(eligibility.checklist || []).map((item) => <li key={item}>{item}</li>)}</ul></div>
+                    <div><h4><FileText size={16} />Documents to prepare</h4><ul>{(eligibility.documents || []).map((item) => <li key={item}>{item}</li>)}</ul></div>
+                  </div>
+                )}
+
+                {eligibility.result === 'not_eligible' && (
+                  <div className="alternative-schemes">
+                    <h4><ArrowRight size={16} />Schemes that may fit your profile</h4>
+                    {eligibility.alternatives?.length ? (
+                      <div className="alternative-list">
+                        {eligibility.alternatives.map((alternative) => (
+                          <article className="alternative-card" key={alternative.id}>
+                            <div><span className="category-pill">{alternative.category}</span><h5>{alternative.name}</h5><p>{alternative.reason}</p></div>
+                            <button type="button" className="btn-secondary" onClick={() => chooseAlternative(alternative.id)}>Check this scheme <ArrowRight size={14} /></button>
+                          </article>
+                        ))}
+                      </div>
+                    ) : (
+                      <p>No close match was found from the answers provided. Try another scheme from the <Link to="/schemes">scheme directory</Link>.</p>
+                    )}
+                  </div>
+                )}
+
+                {eligibility.result === 'needs_verification' && (
+                  <div className="verification-next-step">
+                    <CircleHelp size={17} />
+                    <p>We cannot reliably decide this scheme from the current answers. Check the official criteria before applying.</p>
+                  </div>
+                )}
+
+                <div className="result-notes">{(eligibility.notes || []).map((note) => <p key={note}><CircleHelp size={15} />{note}</p>)}</div>
+                <a className="btn-primary inline-btn" href={eligibility.scheme.officialUrl} target="_blank" rel="noreferrer">Open official scheme portal <ExternalLink size={15} /></a>
+              </>
+            );
+          })()}
         </div>
       )}
     </section>
