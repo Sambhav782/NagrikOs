@@ -6,7 +6,7 @@ import {
   Users, X, CalendarDays, PlayCircle, ExternalLink, Clock3, MapPin, WalletCards
 } from 'lucide-react';
 
-const API = '/api';
+const API = (import.meta.env.VITE_API_BASE || '/api').replace(/\/$/, '');
 const categories = ['All', 'Education', 'Health', 'Housing', 'Agriculture', 'Business', 'Women & Family', 'Pension'];
 const categoryIcons = {
   Education: GraduationCap, Health: HeartPulse, Housing: Home, Agriculture: Leaf,
