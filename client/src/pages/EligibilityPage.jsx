@@ -49,7 +49,7 @@ export default function EligibilityPage() {
         </label>
         <label className="field"><span>{t.income}</span><input type="number" min="0" placeholder="Optional" value={form.annualIncome} onChange={(event) => updateField('annualIncome', event.target.value)} /></label>
         <label className="field"><span>{t.home}</span>
-          <select value={form.ownsHome} onChange={(event) => updateField('ownsHome', event.target.value)}><option value="no">No / not sure</option><option value="yes">Yes</option></select>
+          <select value={form.ownsHome} onChange={(event) => updateField('ownsHome', event.target.value)}><option value="no">No</option><option value="yes">Yes</option><option value="unsure">Not sure</option></select>
         </label>
         <label className="field"><span>{t.student}</span>
           <select value={form.isStudent ? 'yes' : 'no'} onChange={(event) => updateField('isStudent', event.target.value === 'yes')}><option value="yes">Yes</option><option value="no">No</option></select>
