@@ -5,7 +5,7 @@ import {
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext.jsx';
 
-// Recommendations are based on the demo user's known B.Tech-student profile.
+// Recommendations use the signed-in user's B.Tech-student profile.
 // They are possible matches to investigate, not confirmed official eligibility decisions.
 const studentRecommendations = [
   {
@@ -64,9 +64,9 @@ export default function EligibilityPage() {
         <div>
           <div className="section-eyebrow">PERSONALISED GUIDANCE</div>
           <h2>{t.eligibility}</h2>
-          <p>{user ? 'Your demo profile is set up as a B.Tech student. Here are the most relevant scholarship options to investigate.' : 'Answer only what you are comfortable sharing. This demo does not save your answers.'}</p>
+          <p>{user ? 'Your profile is set up as a B.Tech student. Here are the most relevant scholarship options to investigate.' : 'Answer only what you are comfortable sharing. Your answers are used only to generate guidance and are not stored.'}</p>
         </div>
-        <span className="private-note"><ShieldCheck size={15} /> {user ? 'Demo profile' : 'Not stored'}</span>
+        <span className="private-note"><ShieldCheck size={15} /> {user ? 'Personal profile' : 'Not stored'}</span>
       </div>
 
       {user ? (
@@ -115,7 +115,7 @@ export default function EligibilityPage() {
             <label className="field"><span>{t.student}</span>
               <select value={form.isStudent ? 'yes' : 'no'} onChange={(event) => updateField('isStudent', event.target.value === 'yes')}><option value="yes">Yes</option><option value="no">No</option></select>
             </label>
-            <div className="form-submit-row"><p><ShieldCheck size={15} /> Your answers are used only to generate guidance in this demo.</p><button className="btn-primary" type="submit">{t.runCheck}<ClipboardCheck size={16} /></button></div>
+            <div className="form-submit-row"><p><ShieldCheck size={15} /> Your answers are used only to generate guidance and are not stored.</p><button className="btn-primary" type="submit">{t.runCheck}<ClipboardCheck size={16} /></button></div>
           </form>
 
           {eligibility && (
