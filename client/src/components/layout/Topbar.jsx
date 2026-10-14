@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Menu, Globe2, ChevronDown, LogIn, LogOut } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import { useApp } from '../../context/AppContext.jsx';
-import DemoLoginModal from './DemoLoginModal.jsx';
+import SignInModal from './SignInModal.jsx';
 
 const routeLabels = {
   '/': 'navHome',
@@ -16,7 +16,7 @@ const routeLabels = {
 // The topbar owns the sign-in dialog while shared session state lives in AppContext.
 export default function Topbar({ onMenuClick }) {
   const { pathname } = useLocation();
-  const { language, setLanguage, t, user, logoutDemo } = useApp();
+  const { language, setLanguage, t, user, signOut } = useApp();
   const [loginOpen, setLoginOpen] = useState(false);
   const label = t[routeLabels[pathname]] || 'NagrikOS';
 
@@ -41,14 +41,14 @@ export default function Topbar({ onMenuClick }) {
           {user ? (
             <div className="signed-in-actions">
               <span className="signed-in-name"><span className="avatar">{user.username.charAt(0).toUpperCase()}</span><span>{user.username}</span></span>
-              <button className="auth-button sign-out-button" onClick={logoutDemo}><LogOut size={14} /><span>Sign out</span></button>
+              <button className="auth-button sign-out-button" onClick={signOut}><LogOut size={14} /><span>Sign out</span></button>
             </div>
           ) : (
             <button className="auth-button sign-in-button" onClick={() => setLoginOpen(true)}><LogIn size={15} /> Sign in</button>
           )}
         </div>
       </header>
-      {loginOpen && <DemoLoginModal onClose={() => setLoginOpen(false)} />}
+      {loginOpen && <SignInModal onClose={() => setLoginOpen(false)} />}
     </>
   );
 }
