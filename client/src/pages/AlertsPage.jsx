@@ -70,23 +70,24 @@ export default function AlertsPage() {
             <p className="scheme-alert-note"><ShieldCheck size={14} /> These are potential matches, not confirmation of eligibility. Verify the current official criteria before applying.</p>
           </section>
         ) : (
-          <p className="scheme-alert-signin">Sign in to view scholarship alerts personalised for your student profile.</p>
+          <>
+            <p className="scheme-alert-signin">Sign in to view scholarship alerts personalised for your student profile.</p>
+            <form onSubmit={subscribe} className="alerts-form">
+              <label className="sr-only" htmlFor="alert-email">{t.email}</label>
+              <input id="alert-email" type="email" required placeholder={t.email} value={email} onChange={(event) => setEmail(event.target.value)} />
+              <button type="submit" className="btn-primary">{t.subscribe}</button>
+            </form>
+            <div className="topic-picker"><span>{t.allTopics}</span>
+              {availableTopics.map((topic) => (
+                <label key={topic} className={topics.includes(topic) ? 'topic-active' : ''}>
+                  <input type="checkbox" checked={topics.includes(topic)} onChange={(event) => toggleTopic(topic, event.target.checked)} />{topic}
+                </label>
+              ))}
+            </div>
+            {alertMessage && <p className="alert-feedback" role="status">{alertMessage}</p>}
+            <p className="alert-disclaimer"><ShieldCheck size={13} /> You can change your selected topics any time.</p>
+          </>
         )}
-
-        <form onSubmit={subscribe} className="alerts-form">
-          <label className="sr-only" htmlFor="alert-email">{t.email}</label>
-          <input id="alert-email" type="email" required placeholder={t.email} value={email} onChange={(event) => setEmail(event.target.value)} />
-          <button type="submit" className="btn-primary">{t.subscribe}</button>
-        </form>
-        <div className="topic-picker"><span>{t.allTopics}</span>
-          {availableTopics.map((topic) => (
-            <label key={topic} className={topics.includes(topic) ? 'topic-active' : ''}>
-              <input type="checkbox" checked={topics.includes(topic)} onChange={(event) => toggleTopic(topic, event.target.checked)} />{topic}
-            </label>
-          ))}
-        </div>
-        {alertMessage && <p className="alert-feedback" role="status">{alertMessage}</p>}
-        <p className="alert-disclaimer"><ShieldCheck size={13} /> You can change your selected topics any time.</p>
       </div>
     </section>
   );
