@@ -1,0 +1,30 @@
+name: NagrikOS checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install server dependencies
+        run: npm install
+        working-directory: server
+      - name: Test curated data
+        run: npm test
+        working-directory: server
+      - name: Install frontend dependencies
+        run: npm install
+        working-directory: client
+      - name: Build frontend
+        run: npm run build
+        working-directory: client
