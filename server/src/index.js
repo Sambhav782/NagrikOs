@@ -1,7 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import mongoose from 'mongoose';
 import { schemes, updates, events } from './data/schemes.js';
 
 const app = express();
@@ -11,7 +10,7 @@ app.use(cors({ origin: process.env.CLIENT_ORIGIN ? process.env.CLIENT_ORIGIN.spl
 app.use(express.json({ limit: '1mb' }));
 
 app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok', app: 'NagrikOS API', database: mongoose.connection.readyState === 1 ? 'connected' : 'demo-mode' });
+  res.json({ status: 'ok', app: 'NagrikOS API', mode: 'curated-demo-data' });
 });
 
 app.get('/api/schemes', (req, res) => {
@@ -58,7 +57,7 @@ app.get('/api/events', (_req, res) => res.json({ data: events }));
 
 app.post('/api/alerts/subscribe', (req, res) => {
   const { email, language = 'en', categories = [] } = req.body || {};
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email))) {
+  if (!email || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(String(email))) {
     return res.status(400).json({ error: 'Enter a valid email address.' });
   }
   // Demo subscription only. Add a delivery provider and persistent storage before production use.
@@ -66,11 +65,5 @@ app.post('/api/alerts/subscribe', (req, res) => {
 });
 
 app.use((_req, res) => res.status(404).json({ error: 'Route not found' }));
-
-if (process.env.MONGODB_URI) {
-  mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('MongoDB connected'))
-    .catch((error) => console.error('MongoDB connection failed; continuing in demo mode:', error.message));
-}
 
 app.listen(PORT, () => console.log(`NagrikOS API listening on http://localhost:${PORT}`));
