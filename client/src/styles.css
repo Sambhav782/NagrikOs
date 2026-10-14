@@ -15,3 +15,51 @@
 @media(max-width:1200px){.sidebar{width:218px}.main-area{margin-left:218px}.page-content{padding:25px 26px}.topbar{padding:0 26px}.hero{padding-left:29px}.hero h2{font-size:30px}.hero-art{width:40%}.hero-doc{right:80px}.float-check{right:9px}.float-verified{right:32px}.steps-strip{gap:9px;padding:17px}.step-intro{min-width:145px}.step{gap:7px}.step small{font-size:8px}.scheme-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.scheme-card{min-height:225px}.eligibility-side-note{display:none}}
 @media(max-width:900px){.sidebar{transform:translateX(-100%);transition:transform .25s;box-shadow:none}.sidebar.sidebar-open{transform:translateX(0);box-shadow:12px 0 35px #1725441f}.main-area{margin-left:0}.mobile-menu{display:grid;place-items:center}.topbar{gap:12px;padding:0 20px}.breadcrumbs{margin-right:auto}.page-content{padding:22px 20px}.welcome-illustration{margin-right:0}.hero{min-height:290px}.hero-content{width:65%}.hero-art{width:38%;opacity:.88}.hero-doc{right:49px;top:72px}.float-check{top:65px;right:3px}.float-verified{right:13px;bottom:47px}.steps-strip{flex-wrap:wrap}.step-intro{width:100%;margin-bottom:6px}.step{flex:1}.step-arrow{display:none}.eligibility-banner{gap:15px;padding:18px}.eligibility-art{width:118px;transform:scale(.85);transform-origin:center}.alerts-section{gap:18px;padding:22px}.alerts-art{width:115px;transform:scale(.86)}}
 @media(max-width:620px){.topbar{height:59px;padding:0 13px}.breadcrumbs{gap:6px;font-size:10px}.breadcrumbs span:first-child,.crumb-slash{display:none}.topbar-actions{gap:9px}.language-switch{gap:4px}.language-switch>span,.language-switch>svg:first-child{display:none}.language-switch select{max-width:75px}.page-content{padding:17px 13px}.welcome-row{min-height:105px;margin-bottom:13px}.welcome-row h1{font-size:21px;max-width:260px}.welcome-copy{font-size:10px;line-height:1.6;max-width:270px}.welcome-illustration{width:78px;transform:scale(.68);transform-origin:center right;margin-left:-28px}.eyebrow{font-size:9px}.hero{min-height:325px;padding:24px 20px 47px;border-radius:16px}.hero-content{width:100%;max-width:none}.hero h2{font-size:29px;max-width:310px}.hero-content>p{font-size:11px;max-width:290px}.hero-actions{margin-top:17px}.hero-art{width:46%;opacity:.22;right:-20px}.hero-doc{right:30px;top:105px}.float-check,.float-verified{display:none}.hero-proof{font-size:8px;flex-wrap:wrap;max-width:290px;margin-top:17px}.hero-bottom-note{padding:10px 20px;font-size:8px}.steps-strip{padding:15px;gap:12px}.step-intro{margin-bottom:3px}.step{min-width:42%;flex:none}.step-icon{width:31px;height:31px}.step b{font-size:10px}.step small{font-size:8px}.content-section{margin-top:30px}.section-heading{align-items:flex-start;gap:8px}.section-heading h2,.alerts-content h2{font-size:19px}.section-heading p{font-size:10px;line-height:1.6}.section-link{font-size:9px;gap:4px;padding-top:22px}.search-filter-row{gap:7px}.search-box{height:40px;padding:0 10px;gap:7px}.search-box input{font-size:10px}.filter-button{padding:0 8px;font-size:9px;gap:5px}.category-tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:5px;scrollbar-width:thin}.category-tabs button{flex-shrink:0;padding:8px 10px}.scheme-grid{grid-template-columns:1fr;gap:10px}.scheme-card{min-height:0;padding:15px}.scheme-card h3{font-size:13px}.scheme-card>p{font-size:10px}.benefit-line{margin-top:3px}.eligibility-banner{margin-top:25px;padding:18px;gap:4px;min-height:0}.eligibility-art{width:75px;flex-shrink:0;transform:scale(.65);transform-origin:center left;margin-right:-25px}.eligibility-copy h2{font-size:17px}.eligibility-copy p{font-size:10px}.eligibility-copy .btn-primary{padding:10px 11px;font-size:10px}.eligibility-section{padding:16px}.private-note{display:none}.eligibility-form{grid-template-columns:1fr;gap:12px}.full-field,.form-submit-row{grid-column:1}.form-submit-row{align-items:flex-start;flex-direction:column}.form-submit-row .btn-primary{width:100%}.result-columns{grid-template-columns:1fr;gap:16px}.shorts-grid,.events-grid{grid-template-columns:1fr;gap:10px}.short-card{display:grid;grid-template-columns:105px 1fr}.short-visual{height:100%;min-height:180px}.short-body{padding:12px}.short-body h3{font-size:11px;margin-top:9px}.short-body p{font-size:9px}.short-meta{gap:5px;flex-wrap:wrap}.event-card{min-height:0;padding:15px}.event-icon{margin-bottom:10px}.alerts-section{padding:20px 16px;gap:0}.alerts-art{display:none}.alerts-content h2{font-size:19px}.alerts-content>p{font-size:10px}.alerts-form{flex-direction:column}.alerts-form .btn-primary{width:100%;min-height:39px}.topic-picker{align-items:flex-start}.topic-picker>span{width:100%;margin-bottom:2px}.footer{grid-template-columns:1fr;gap:10px}.footer>p{font-size:9px}.footer-links{grid-column:1;gap:11px;flex-wrap:wrap}.footer-links span{margin-left:0;width:100%}.scheme-modal{padding:21px}.scheme-modal h2{font-size:20px}.modal-actions{flex-direction:column}.modal-actions>*{width:100%}.offline-banner{margin:10px 13px 0;font-size:10px}}
+
+
+/* React Router refactor: style navigation links like the original sidebar buttons. */
+.side-nav a {
+  border: 0;
+  background: transparent;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  color: #77849a;
+  text-align: left;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background .2s, color .2s;
+}
+.side-nav a:hover { background: #f5f7fc; color: var(--ink); }
+.side-nav a.active { background: #edf2ff; color: #3567e8; font-weight: 700; }
+.side-nav a .nav-count { margin-left: auto; }
+.sidebar-scrim {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 19;
+  border: 0;
+  background: #17254455;
+}
+.route-section { margin-top: 8px; }
+.filter-select-label { position: relative; display: flex; align-items: center; }
+.filter-select-label select {
+  appearance: none;
+  min-width: 145px;
+  padding-right: 32px;
+  cursor: pointer;
+}
+.filter-select-label > svg { position: absolute; right: 10px; pointer-events: none; color: #78869d; }
+.btn-primary, .btn-secondary, .btn-ghost { text-decoration: none; cursor: pointer; }
+.not-found-page .empty-state { padding: 35px 18px; }
+.not-found-page .empty-state p { margin: 0; }
+.not-found-page .btn-primary { margin-top: 4px; }
+@media (max-width: 900px) {
+  .sidebar-scrim { display: block; }
+}
+@media (max-width: 620px) {
+  .filter-select-label select { min-width: 100px; max-width: 115px; }
+}
