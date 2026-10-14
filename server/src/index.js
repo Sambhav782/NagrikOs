@@ -57,7 +57,7 @@ app.get('/api/events', (_req, res) => res.json({ data: events }));
 
 app.post('/api/alerts/subscribe', (req, res) => {
   const { email, language = 'en', categories = [] } = req.body || {};
-  if (!email || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(String(email))) {
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email))) {
     return res.status(400).json({ error: 'Enter a valid email address.' });
   }
   // Demo subscription only. Add a delivery provider and persistent storage before production use.
