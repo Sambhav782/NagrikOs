@@ -12,7 +12,7 @@ export default function DemoLoginModal({ onClose }) {
   const submit = (event) => {
     event.preventDefault();
     if (!loginDemo(username, password)) {
-      setError('That demo ID or password is incorrect. Try the credentials shown below.');
+      setError('The username or password is incorrect. Please try again.');
       return;
     }
     setError('');
@@ -25,16 +25,15 @@ export default function DemoLoginModal({ onClose }) {
         <button className="modal-close" type="button" aria-label="Close sign in" onClick={onClose}><X size={17} /></button>
         <div className="login-icon"><LockKeyhole size={23} /></div>
         <span className="section-eyebrow">WELCOME TO NAGRIKOS</span>
-        <h2 id="login-title">Sign in to your demo account</h2>
-        <p>Use the sample account to preview a personalised student dashboard.</p>
-        <div className="demo-credentials"><strong>Demo ID</strong><code>Sambhav</code><strong>Password</strong><code>123456</code></div>
+        <h2 id="login-title">Sign in to your account</h2>
+        <p>Sign in to view personalised scholarship recommendations.</p>
         <form className="login-form" onSubmit={submit}>
-          <label className="field"><span>Username</span><input autoComplete="username" value={username} onChange={(event) => setUsername(event.target.value)} placeholder="Enter demo ID" required /></label>
+          <label className="field"><span>Username</span><input autoComplete="username" value={username} onChange={(event) => setUsername(event.target.value)} placeholder="Enter username" required /></label>
           <label className="field"><span>Password</span><input autoComplete="current-password" type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Enter password" required /></label>
           {error && <p className="login-error" role="alert">{error}</p>}
           <button className="btn-primary login-submit" type="submit">Sign in <ArrowRight size={16} /></button>
         </form>
-        <p className="login-security-note"><ShieldCheck size={15} /> Demo only: credentials are hardcoded in the frontend and must not be used for real accounts.</p>
+        <p className="login-security-note"><ShieldCheck size={15} /> This sign-in is for presentation purposes only and is not secure authentication.</p>
       </section>
     </div>
   );
