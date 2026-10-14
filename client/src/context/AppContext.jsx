@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { translations } from '../data/translations.js';
 
-const API_BASE = (import.meta.env.VITE_API_BASE || '/api').replace(/\/$/, '');
+const API_BASE = (import.meta.env.VITE_API_BASE || (import.meta.env.PROD ? 'https://nagrikos-oq90.onrender.com/api' : '/api')).replace(/\/$/, '');
 const AppContext = createContext(null);
 
 // Centralize shared data and actions so pages stay focused on presentation.
