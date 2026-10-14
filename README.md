@@ -29,6 +29,13 @@ NagrikOS is a citizen-first public-service prototype that brings Indian governme
 
 The current implementation uses curated in-memory/static data. The future product may add verified data ingestion, persistent storage, stronger authentication, and real notification delivery.
 
+## Live prototype
+
+- **NagrikOS website:** https://nagrikos-1-hn7c.onrender.com/
+- **Backend API health:** https://nagrikos-oq90.onrender.com/api/health
+
+The public website is a deployed prototype. Some capabilities, including secure authentication, live eligibility verification, persistent alert preferences, and automated notifications, are not implemented yet.
+
 ## Run locally
 
 **Requirements:** Node.js 20+ and npm.
