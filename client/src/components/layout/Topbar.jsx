@@ -13,7 +13,7 @@ const routeLabels = {
   '/alerts': 'navAlerts'
 };
 
-// The topbar owns the sign-in dialog while shared demo-session state lives in AppContext.
+// The topbar owns the sign-in dialog while shared session state lives in AppContext.
 export default function Topbar({ onMenuClick }) {
   const { pathname } = useLocation();
   const { language, setLanguage, t, user, logoutDemo } = useApp();

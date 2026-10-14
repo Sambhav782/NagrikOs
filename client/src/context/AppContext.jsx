@@ -7,7 +7,7 @@ const AppContext = createContext(null);
 // Centralize shared data and actions so pages stay focused on presentation.
 export function AppProvider({ children }) {
   const [language, setLanguage] = useState('en');
-  // Frontend-only demo session; replace with a real authentication service before production.
+  // Frontend-only sign-in for the presentation; replace with secure authentication before production.
   const [user, setUser] = useState(null);
   const loginDemo = useCallback((username, password) => {
     if (String(username).trim().toLowerCase() !== 'sambhav' || password !== '123456') return false;
