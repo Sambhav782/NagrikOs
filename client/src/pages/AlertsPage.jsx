@@ -27,7 +27,7 @@ const studentSchemeAlerts = [
   }
 ];
 
-// This page displays profile-relevant scholarship alerts and manages notification preferences.
+// Signed-in users see scholarship opportunities; signed-out users can submit email/topic preferences. Neither flow sends automated notifications.
 export default function AlertsPage() {
   const { t, user, email, setEmail, topics, setTopics, subscribe, alertMessage } = useApp();
 
