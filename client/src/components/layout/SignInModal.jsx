@@ -2,16 +2,16 @@ import { useState } from 'react';
 import { ArrowRight, LockKeyhole, ShieldCheck, X } from 'lucide-react';
 import { useApp } from '../../context/AppContext.jsx';
 
-// This is intentionally a hardcoded demo sign-in, not secure production authentication.
-export default function DemoLoginModal({ onClose }) {
-  const { loginDemo } = useApp();
+// This sign-in is intended for presentation use, not secure production authentication.
+export default function SignInModal({ onClose }) {
+  const { signIn } = useApp();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const submit = (event) => {
     event.preventDefault();
-    if (!loginDemo(username, password)) {
+    if (!signIn(username, password)) {
       setError('The username or password is incorrect. Please try again.');
       return;
     }
