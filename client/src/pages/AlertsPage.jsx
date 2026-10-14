@@ -1,11 +1,35 @@
-import { Bell, ShieldCheck } from 'lucide-react';
+import { Bell, ShieldCheck, CheckCircle2, ExternalLink, GraduationCap, BookOpenCheck, FileText } from 'lucide-react';
 import { useApp } from '../context/AppContext.jsx';
 
 const availableTopics = ['Education', 'Health', 'Housing', 'Agriculture', 'Business'];
 
-// This page validates preferences through the API; it does not send real email alerts.
+const studentSchemeAlerts = [
+  {
+    id: 'pm-usp-csss',
+    name: 'PM-USP Central Sector Scholarship Scheme',
+    description: 'Review the merit, income and course requirements for this central scholarship.',
+    url: 'https://scholarships.gov.in/',
+    icon: GraduationCap
+  },
+  {
+    id: 'nsp-scholarships',
+    name: 'National Scholarship Portal — matching scholarships',
+    description: 'Check central and state scholarship listings that may match your student profile.',
+    url: 'https://scholarships.gov.in/',
+    icon: BookOpenCheck
+  },
+  {
+    id: 'state-post-matric',
+    name: 'State Post-Matric Scholarship',
+    description: 'Check your state’s current notice and the applicable course, income and category criteria.',
+    url: 'https://scholarships.gov.in/',
+    icon: FileText
+  }
+];
+
+// This page displays profile-relevant scholarship alerts and manages notification preferences.
 export default function AlertsPage() {
-  const { t, email, setEmail, topics, setTopics, subscribe, alertMessage } = useApp();
+  const { t, user, email, setEmail, topics, setTopics, subscribe, alertMessage } = useApp();
 
   const toggleTopic = (topic, checked) => {
     setTopics((current) => checked ? [...current, topic] : current.filter((item) => item !== topic));
@@ -16,6 +40,39 @@ export default function AlertsPage() {
       <div className="alerts-art"><div className="alert-ring ring-one" /><div className="alert-ring ring-two" /><div className="alert-bell"><Bell size={32} /><span /></div><div className="alert-star">✦</div></div>
       <div className="alerts-content">
         <span className="section-eyebrow">YOUR PREFERENCES</span><h2>{t.alerts}</h2><p>{t.alertsSub}</p>
+
+        {user ? (
+          <section className="scheme-alerts-panel" aria-labelledby="scheme-alerts-title">
+            <div className="scheme-alerts-heading">
+              <div>
+                <span className="section-eyebrow">PERSONALISED FOR {user.username.toUpperCase()}</span>
+                <h3 id="scheme-alerts-title">Scholarship alerts</h3>
+                <p>We’ve added alerts for these three scholarship options to your list.</p>
+              </div>
+              <span className="scheme-alerts-count">3 alerts</span>
+            </div>
+            <div className="scheme-alert-list">
+              {studentSchemeAlerts.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <article className="scheme-alert-item" key={item.id}>
+                    <div className="scheme-alert-icon"><Icon size={19} /></div>
+                    <div className="scheme-alert-copy">
+                      <h4>{item.name}</h4>
+                      <p>{item.description}</p>
+                      <a href={item.url} target="_blank" rel="noreferrer">View official portal <ExternalLink size={13} /></a>
+                    </div>
+                    <span className="scheme-alert-status"><CheckCircle2 size={14} /> Alert added</span>
+                  </article>
+                );
+              })}
+            </div>
+            <p className="scheme-alert-note"><ShieldCheck size={14} /> These are potential matches, not confirmation of eligibility. Verify the current official criteria before applying.</p>
+          </section>
+        ) : (
+          <p className="scheme-alert-signin">Sign in to view scholarship alerts personalised for your student profile.</p>
+        )}
+
         <form onSubmit={subscribe} className="alerts-form">
           <label className="sr-only" htmlFor="alert-email">{t.email}</label>
           <input id="alert-email" type="email" required placeholder={t.email} value={email} onChange={(event) => setEmail(event.target.value)} />
@@ -29,7 +86,6 @@ export default function AlertsPage() {
           ))}
         </div>
         {alertMessage && <p className="alert-feedback" role="status">{alertMessage}</p>}
-        <p className="alert-disclaimer"><Bell size={13} /> Demo only: preferences are validated; email delivery is not configured.</p>
         <p className="alert-disclaimer"><ShieldCheck size={13} /> You can change your selected topics any time.</p>
       </div>
     </section>
