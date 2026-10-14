@@ -105,14 +105,155 @@ export const schemes = [
   }
 ];
 
+// Curated seed records based on official government announcements. These are static demo
+// entries, not a live news feed; always open the linked source to confirm current details.
 export const updates = [
-  { id: 'update-1', type: 'Explainer', title: 'How to check a scheme before you apply', description: 'A quick checklist: eligibility, official deadline, required documents, and the application portal.', category: 'Know your rights', readTime: '45 sec', officialUrl: 'https://www.myscheme.gov.in/' },
-  { id: 'update-2', type: 'Digital help', title: 'Keep your documents application-ready', description: 'Check name consistency, readable scans, current certificates, and bank details before starting an application.', category: 'Application tips', readTime: '35 sec', officialUrl: 'https://www.india.gov.in/' },
-  { id: 'update-3', type: 'Safety', title: 'Avoid fake scheme links and fees', description: 'Use official government domains and never share OTPs or pay unknown agents promising guaranteed benefits.', category: 'Stay safe', readTime: '40 sec', officialUrl: 'https://www.cybercrime.gov.in/' }
+  {
+    id: 'update-pm-rahat',
+    type: 'Citizen safety',
+    title: 'PM RAHAT offers cashless treatment for road-accident victims',
+    description: 'The government announced cashless treatment of up to ₹1.5 lakh for eligible road-accident victims, aiming to make urgent care less dependent on immediate payment.',
+    category: 'Health & safety',
+    ministry: 'Government of India',
+    publishedAt: '13 Feb 2026',
+    readTime: '45 sec',
+    officialUrl: 'https://www.pib.gov.in/PressReleasePage.aspx?PRID=2227542&lang=1&reg=1'
+  },
+  {
+    id: 'update-lakhpati-didi',
+    type: 'Women & livelihoods',
+    title: 'Lakhpati Didi target raised to 6 crore',
+    description: 'The government set a new target of supporting 6 crore Lakhpati Didis by March 2029, building on the reported milestone of 3 crore women reaching the programme’s income benchmark.',
+    category: 'Women & livelihoods',
+    ministry: 'Ministry of Rural Development',
+    publishedAt: '13 Feb 2026',
+    readTime: '40 sec',
+    officialUrl: 'https://www.pib.gov.in/PressReleasePage.aspx?PRID=2227542&lang=1&reg=1'
+  },
+  {
+    id: 'update-startup-fund',
+    type: 'Startups',
+    title: 'Startup India Fund of Funds 2.0 gets ₹10,000 crore corpus',
+    description: 'The government approved a ₹10,000 crore corpus for Fund of Funds 2.0 to support the startup ecosystem, including deep-tech ideas and early-stage innovation through investment funds.',
+    category: 'Business & innovation',
+    ministry: 'Department for Promotion of Industry and Internal Trade',
+    publishedAt: '13 Feb 2026',
+    readTime: '40 sec',
+    officialUrl: 'https://www.pib.gov.in/PressReleasePage.aspx?PRID=2227542&lang=1&reg=1'
+  },
+  {
+    id: 'update-5g-hackathon',
+    type: 'Innovation',
+    title: 'DoT launches the 5G Innovation Hackathon 2026',
+    description: 'Students, startups, MSMEs and innovators were invited to develop 5G and related technology use cases. The announcement included access to 100 5G Use Case Labs and a ₹50 lakh seed-funding pool for selected teams.',
+    category: 'Technology',
+    ministry: 'Department of Telecommunications',
+    publishedAt: '20 Mar 2026',
+    readTime: '50 sec',
+    officialUrl: 'https://www.pib.gov.in/PressReleasePage.aspx?PRID=2243209&lang=1&reg=3'
+  },
+  {
+    id: 'update-ai-skilling',
+    type: 'Digital skills',
+    title: 'AI skilling initiative announced for 15,000 creators',
+    description: 'The Ministry of Information & Broadcasting announced a national AI skilling initiative with Google and YouTube through IICT, alongside the MyWAVES creator platform.',
+    category: 'Skills & media',
+    ministry: 'Ministry of Information & Broadcasting',
+    publishedAt: '23 Mar 2026',
+    readTime: '45 sec',
+    officialUrl: 'https://www.pib.gov.in/PressReleasePage.aspx?PRID=2243949&lang=2&reg=3'
+  },
+  {
+    id: 'update-bharatnet',
+    type: 'Digital access',
+    title: 'BharatNet expands rural digital connectivity',
+    description: 'A government update reported that around 2.21 lakh Gram Panchayats had been made service-ready under BharatNet, while Common Service Centres continue to provide assisted digital services.',
+    category: 'Digital public services',
+    ministry: 'Ministry of Electronics & Information Technology',
+    publishedAt: '6 Aug 2026',
+    readTime: '45 sec',
+    officialUrl: 'https://www.pib.gov.in/PressReleasePage.aspx?PRID=2295635&lang=1&reg=48'
+  },
+  {
+    id: 'update-rural-employment',
+    type: 'Rural livelihoods',
+    title: 'VB-G RAM G Act introduces a 125-day rural employment guarantee',
+    description: 'The new rural employment framework came into force on 1 July 2026, providing eligible rural households a statutory entitlement to 125 days of wage employment under the Act.',
+    category: 'Jobs & rural development',
+    ministry: 'Ministry of Rural Development',
+    publishedAt: '1 Jul 2026',
+    readTime: '50 sec',
+    officialUrl: 'https://www.pib.gov.in/PressReleasePage.aspx?PRID=2279995&lang=2&reg=48'
+  },
+  {
+    id: 'update-nidar',
+    type: 'Student innovation',
+    title: 'NIDAR 2.0 challenges students to build smarter drones',
+    description: 'MeitY and Drone Federation India launched the second National Innovation Challenge for Drone Application and Research, with drone and component innovation tracks and a reported prize pool above ₹65 lakh.',
+    category: 'Research & innovation',
+    ministry: 'Ministry of Electronics & Information Technology',
+    publishedAt: '13 Jul 2026',
+    readTime: '50 sec',
+    officialUrl: 'https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=2284236&lang=2&reg=48'
+  }
 ];
 
+// Historical and illustrative event cards seeded from official government event pages.
+// Dates/statuses below describe the listed editions, not a promise that registration is open.
 export const events = [
-  { id: 'event-1', title: 'Find a nearby Common Service Centre', dateLabel: 'Available year-round', location: 'Across India', category: 'Citizen services', description: 'Locate a service centre for supported digital and government services.', officialUrl: 'https://findmycsc.nic.in/' },
-  { id: 'event-2', title: 'Explore official government announcements', dateLabel: 'Updated by official source', location: 'India', category: 'Public information', description: 'Check current releases and announcements from the Press Information Bureau.', officialUrl: 'https://pib.gov.in/' },
-  { id: 'event-3', title: 'Discover public services in your state', dateLabel: 'State-specific', location: 'Choose your state', category: 'State services', description: 'Start from the National Portal of India and navigate to relevant state departments.', officialUrl: 'https://www.india.gov.in/' }
+  {
+    id: 'event-aadhaar-hackathon-2026',
+    title: 'Aadhaar Data-Driven Innovation Hackathon 2026',
+    dateLabel: '5–20 January 2026 · Registration closed',
+    location: 'Online; shortlisted teams present in person',
+    organizer: 'UIDAI with the National Informatics Centre (NIC)',
+    category: 'Hackathon · Closed',
+    status: 'Past event',
+    description: 'Participants analysed anonymised Aadhaar enrolment and update datasets to discover insights and propose data-driven improvements.',
+    officialUrl: 'https://event.data.gov.in/event/online-hackathon-on-data-driven-innovation-on-aadhaar-2026/'
+  },
+  {
+    id: 'event-5g-innovation-2026',
+    title: '5G Innovation Hackathon 2026',
+    dateLabel: 'Proposals: 20 March–17 April 2026 · Closed',
+    location: 'Nationwide through designated 5G Use Case Lab institutions',
+    organizer: 'Department of Telecommunications, Ministry of Communications',
+    category: 'Technology · Closed',
+    status: 'Past event',
+    description: 'A national challenge for students, startups, MSMEs and innovators building practical 5G, IoT and AI-enabled solutions. Selected teams were offered prototype support and lab access.',
+    officialUrl: 'https://www.pib.gov.in/PressReleasePage.aspx?PRID=2243209&lang=1&reg=3'
+  },
+  {
+    id: 'event-cdac-security-2026',
+    title: 'C-DAC Security Hackathon 2026',
+    dateLabel: '6–10 July 2026 · Listed edition closed',
+    location: 'C-DAC Chennai',
+    organizer: 'Centre for Development of Advanced Computing (C-DAC), MeitY',
+    category: 'Cybersecurity · Closed',
+    status: 'Past event',
+    description: 'A 36-hour security challenge inviting ethical hackers and researchers to assess the BOSS PXE Secure Platform and report validated vulnerabilities.',
+    officialUrl: 'https://www.cdac.gov.in/index.aspx?id=ev_cdac_advertisement'
+  },
+  {
+    id: 'event-nidar-2026',
+    title: 'NIDAR 2.0 — National Drone Innovation Challenge',
+    dateLabel: '2026–27 edition · Check source for current deadlines',
+    location: 'Hybrid launch; participation from across India',
+    organizer: 'MeitY with Drone Federation India, under SwaYaan',
+    category: 'Drones & research',
+    status: 'Check official page',
+    description: 'Student teams are challenged to build autonomous drone applications and indigenous drone components. The launch announcement describes prizes, incubation and technical support.',
+    officialUrl: 'https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=2284236&lang=2&reg=48'
+  },
+  {
+    id: 'event-cyber-kushti-2026',
+    title: 'CYBER KUSHTI 2026 — Cybersecurity & AI Hackathon',
+    dateLabel: 'Launched 15 August 2026 · Final-round details on source page',
+    location: 'Final round associated with NCCDFI 2026',
+    organizer: 'National Institute of Electronics and Information Technology (NIELIT), MeitY',
+    category: 'Cybersecurity & AI',
+    status: 'Check official page',
+    description: 'A national cybersecurity and AI hackathon focused on evaluating human judgement in security assessment, rather than detection speed alone.',
+    officialUrl: 'https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=2300120&lang=2&reg=48'
+  }
 ];
