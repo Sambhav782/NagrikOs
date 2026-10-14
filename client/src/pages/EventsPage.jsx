@@ -19,8 +19,8 @@ export default function EventsPage() {
           Government events <ArrowUpRight size={16} />
         </a>
       </div>
-      <div className="events-demo-note">
-        <strong>Curated demo listings</strong>
+      <div className="event-source-note">
+        <strong>Official-source listings</strong>
         <span>Some editions have ended. Open the official source to check the latest deadlines and future editions before applying.</span>
       </div>
       <div className="events-grid">
