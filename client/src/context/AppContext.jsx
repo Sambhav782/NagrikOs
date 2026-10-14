@@ -7,6 +7,14 @@ const AppContext = createContext(null);
 // Centralize shared data and actions so pages stay focused on presentation.
 export function AppProvider({ children }) {
   const [language, setLanguage] = useState('en');
+  // Frontend-only demo session; replace with a real authentication service before production.
+  const [user, setUser] = useState(null);
+  const loginDemo = useCallback((username, password) => {
+    if (String(username).trim().toLowerCase() !== 'sambhav' || password !== '123456') return false;
+    setUser({ username: 'Sambhav', displayName: 'Sambhav Shahi', profileType: 'B.Tech student' });
+    return true;
+  }, []);
+  const logoutDemo = useCallback(() => setUser(null), []);
   const [schemes, setSchemes] = useState([]);
   const [updates, setUpdates] = useState([]);
   const [events, setEvents] = useState([]);
@@ -93,13 +101,13 @@ export function AppProvider({ children }) {
   }, []);
 
   const value = useMemo(() => ({
-    language, setLanguage, t,
+    language, setLanguage, t, user, loginDemo, logoutDemo,
     schemes, updates, events, apiOffline,
     selectedScheme, setSelectedScheme,
     eligibility, setEligibility, form, setForm, runEligibility, startCheck,
     email, setEmail, topics, setTopics, alertMessage, subscribe
   }), [
-    language, t, schemes, updates, events, apiOffline, selectedScheme,
+    language, t, user, loginDemo, logoutDemo, schemes, updates, events, apiOffline, selectedScheme,
     eligibility, form, runEligibility, startCheck, email, topics, alertMessage, subscribe
   ]);
 
