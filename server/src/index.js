@@ -35,7 +35,7 @@ app.get('/api/schemes/:id', (req, res) => {
 function evaluateScheme(scheme, profile) {
   const age = profile.age === '' || profile.age === undefined ? null : Number(profile.age);
   const occupation = String(profile.occupation || '').toLowerCase();
-  const isStudent = profile.isStudent === true || occupation === 'student';
+  const isStudent = profile.isStudent === true;
   const ownsHome = profile.ownsHome === 'yes';
 
   switch (scheme.id) {
@@ -48,6 +48,9 @@ function evaluateScheme(scheme, profile) {
       }
       return { result: 'eligible', reason: 'Your farmer profile matches the basic demo criteria. Land records and exclusion rules still need official verification.' };
     case 'pm-awas-urban':
+      if (profile.ownsHome === 'unsure' || profile.ownsHome === '') {
+        return { result: 'needs_verification', reason: 'You have not confirmed whether your household owns a home. This is an important condition for housing assistance.' };
+      }
       if (ownsHome) {
         return { result: 'not_eligible', reason: 'You indicated that you already own a home. This demo treats that as a mismatch for first-home housing assistance; verify the applicable PMAY-U 2.0 vertical rules.' };
       }
