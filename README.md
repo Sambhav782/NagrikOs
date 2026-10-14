@@ -15,14 +15,14 @@ NagrikOS is a multilingual citizen-services assistant that helps people discover
 - Short-form explainers and links to public-service resources
 - Event/resource directory
 - Alert preference validation (email delivery is **not** configured)
-- Express API health endpoint and optional MongoDB connection
-- Demo mode runs without a database or secret keys
+- Express API health endpoint
+- Runs without a database or secret keys
 
 ## Stack
 
 - **Frontend:** React 18, Vite, Lucide icons, responsive CSS
 - **Backend:** Node.js, Express
-- **Optional database:** MongoDB via Mongoose
+- **Data:** Curated JavaScript demo dataset
 - **Tests:** Node's built-in test runner
 
 ## Run locally
@@ -42,15 +42,14 @@ npm run dev
 - API health: http://localhost:5000/api/health
 - Schemes API: http://localhost:5000/api/schemes
 
-The frontend Vite server proxies `/api` requests to port 5000. MongoDB is optional; without `MONGODB_URI`, the API uses the included curated demo data.
+The frontend Vite server proxies `/api` requests to port 5000. The backend serves curated demo data directly from `server/src/data/schemes.js`; no database connection is required.
 
-### Optional environment variables
+### Environment variables
 
-Copy `server/.env.example` to `server/.env` and set values as needed:
+Copy `server/.env.example` to `server/.env` only if you need to override the defaults:
 
 - `PORT` — API port (default `5000`)
 - `CLIENT_ORIGIN` — comma-separated allowed frontend origins
-- `MONGODB_URI` — optional MongoDB connection string
 
 For a separately hosted frontend, copy `client/.env.example` to `client/.env` and set `VITE_API_BASE` to the deployed API base URL ending in `/api`, for example `https://your-api.example.com/api`. Rebuild the frontend after changing this variable.
 
