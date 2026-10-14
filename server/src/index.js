@@ -30,26 +30,98 @@ app.get('/api/schemes/:id', (req, res) => {
   res.json({ data: scheme });
 });
 
+// Evaluate only the criteria represented by the current demo form. These are
+// profile-matching rules for the prototype, not a substitute for official checks.
+function evaluateScheme(scheme, profile) {
+  const age = profile.age === '' || profile.age === undefined ? null : Number(profile.age);
+  const occupation = String(profile.occupation || '').toLowerCase();
+  const isStudent = profile.isStudent === true;
+  const ownsHome = profile.ownsHome === 'yes';
+
+  switch (scheme.id) {
+    case 'pm-kisan':
+      if (occupation !== 'farmer') {
+        return { result: 'not_eligible', reason: 'Your selected occupation is not farmer. This demo matches PM-KISAN to farmer profiles.' };
+      }
+      if (age !== null && age < 18) {
+        return { result: 'not_eligible', reason: 'The applicant should be an adult to proceed with this application.' };
+      }
+      return { result: 'eligible', reason: 'Your farmer profile matches the basic demo criteria. Land records and exclusion rules still need official verification.' };
+    case 'pm-awas-urban':
+      if (profile.ownsHome === 'unsure' || profile.ownsHome === '') {
+        return { result: 'needs_verification', reason: 'You have not confirmed whether your household owns a home. This is an important condition for housing assistance.' };
+      }
+      if (ownsHome) {
+        return { result: 'not_eligible', reason: 'You indicated that you already own a home. This demo treats that as a mismatch for first-home housing assistance; verify the applicable PMAY-U 2.0 vertical rules.' };
+      }
+      return { result: 'eligible', reason: 'You indicated that you do not own a home, matching one basic demo criterion. Income, household, location, and vertical-specific rules still need verification.' };
+    case 'nsp':
+      return isStudent
+        ? { result: 'eligible', reason: 'Your student profile matches the basic demo criteria. The exact scholarship, course, academic performance, income, and category requirements still apply.' }
+        : { result: 'not_eligible', reason: 'You indicated that you are not currently a student. The scholarships represented by this portal generally require student enrolment.' };
+    case 'stand-up-india':
+      return occupation === 'self-employed'
+        ? { result: 'eligible', reason: 'Your self-employed profile matches the basic demo criteria. Applicant category, greenfield enterprise, and lender conditions still need verification.' }
+        : { result: 'not_eligible', reason: 'Your current profile does not indicate self-employment or a business applicant. This demo therefore does not match you to Stand-Up India.' };
+    case 'mudra':
+      return occupation === 'self-employed'
+        ? { result: 'eligible', reason: 'Your self-employed profile matches the basic demo criteria. Business activity, credit assessment, and lender conditions still apply.' }
+        : { result: 'not_eligible', reason: 'Your current profile does not indicate a business or self-employment activity, which this demo uses as the basic MUDRA match.' };
+    case 'atal-pension':
+      if (age === null) return { result: 'needs_verification', reason: 'Enter your age to check the basic age range for Atal Pension Yojana.' };
+      return age >= 18 && age <= 40
+        ? { result: 'eligible', reason: 'Your age is within the basic 18–40 demo range. Current participation rules and bank-account conditions still need verification.' }
+        : { result: 'not_eligible', reason: 'Your age is outside the basic 18–40 range used by this demo for Atal Pension Yojana.' };
+    case 'ayushman-bharat':
+      return { result: 'needs_verification', reason: 'PM-JAY eligibility depends on official beneficiary records and applicable state rules, which this form cannot verify.' };
+    case 'ujjwala':
+      return { result: 'needs_verification', reason: 'This form does not ask whether the applicant is an adult woman or whether the household meets the LPG and deprivation criteria required by the scheme.' };
+    default:
+      return { result: 'needs_verification', reason: 'The current demo does not have enough structured rules for this scheme to make a reliable match.' };
+  }
+}
+
 app.post('/api/eligibility/check', (req, res) => {
-  const { schemeId, age, state, occupation, annualIncome, ownsHome, isStudent } = req.body || {};
+  const profile = req.body || {};
+  const { schemeId, age } = profile;
   const scheme = schemes.find((item) => item.id === schemeId);
   if (!scheme) return res.status(404).json({ error: 'Choose a valid scheme to check.' });
-  const notes = [];
-  if (age !== undefined && (Number(age) < 0 || Number(age) > 120)) {
+  if (age !== undefined && age !== '' && (!Number.isFinite(Number(age)) || Number(age) < 0 || Number(age) > 120)) {
     return res.status(400).json({ error: 'Enter a valid age.' });
   }
-  if (state) notes.push('State or union-territory rules may affect eligibility.');
-  if (annualIncome !== '' && annualIncome !== undefined && Number(annualIncome) >= 0) notes.push('Income thresholds differ by scheme and may require an official certificate.');
-  if (ownsHome === 'yes' && scheme.category === 'Housing') notes.push('Existing home ownership may affect eligibility for some housing benefits.');
-  if (occupation === 'student' || isStudent) notes.push('For education support, check the exact scholarship, institution, course, and academic-year requirements.');
-  notes.push('This is a preliminary guidance check, not an official eligibility decision. The relevant department or portal makes the final determination.');
+
+  const evaluation = evaluateScheme(scheme, profile);
+  const alternatives = schemes
+    .filter((candidate) => candidate.id !== scheme.id)
+    .map((candidate) => ({ scheme: candidate, evaluation: evaluateScheme(candidate, profile) }))
+    .filter(({ evaluation: candidateEvaluation }) => candidateEvaluation.result === 'eligible')
+    .slice(0, 3)
+    .map(({ scheme: candidate, evaluation: candidateEvaluation }) => ({
+      id: candidate.id,
+      name: candidate.name,
+      category: candidate.category,
+      summary: candidate.summary,
+      officialUrl: candidate.officialUrl,
+      reason: candidateEvaluation.reason
+    }));
+
+  const notes = [
+    'This is a demo profile match, not an official eligibility decision. Rules may vary by scheme, state, category, and current government notification.',
+    'Before applying, confirm the latest criteria and document list on the official scheme portal.'
+  ];
+  if (profile.state) notes.push('State or union-territory rules may affect eligibility.');
+  if (profile.annualIncome !== '' && profile.annualIncome !== undefined) {
+    notes.push('Your income was not compared with a numeric threshold because the relevant scheme-specific threshold is not encoded in this demo.');
+  }
+
   res.json({
     scheme: { id: scheme.id, name: scheme.name, officialUrl: scheme.officialUrl },
-    result: 'needs_official_verification',
-    summary: 'Your answers are a starting point. Review the requirements below and confirm details on the official scheme portal.',
+    result: evaluation.result,
+    summary: evaluation.reason,
     checklist: scheme.eligibility,
-    documents: scheme.documents,
-    notes
+    documents: evaluation.result === 'eligible' ? scheme.documents : [],
+    notes,
+    alternatives
   });
 });
 
