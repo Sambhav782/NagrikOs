@@ -45,8 +45,8 @@ export default function HomePage() {
             <div className="doc-line long" /><div className="doc-line" /><div className="doc-line short" />
             <div className="doc-check"><Check size={16} /></div>
           </div>
-          <div className="floating-card float-check"><span className="float-icon"><FileCheck2 size={18} /></span><span><b>Eligibility guide</b><small>Step-by-step help</small></span><Check size={17} className="float-success" /></div>
-          <div className="floating-card float-verified"><span className="verified-seal"><ShieldCheck size={18} /></span><span><b>Official links</b><small>Trust, not guesswork</small></span></div>
+          <div className="floating-card float-check"><span className="float-icon"><FileCheck2 size={18} /></span><span><b>{t.eligibilityGuide}</b><small>{t.stepByStepHelp}</small></span><Check size={17} className="float-success" /></div>
+          <div className="floating-card float-verified"><span className="verified-seal"><ShieldCheck size={18} /></span><span><b>{t.officialLinks}</b><small>{t.trustNotGuesswork}</small></span></div>
           <div className="hero-spark spark-a">✳</div><div className="hero-spark spark-b">✦</div>
         </div>
         <div className="hero-bottom-note"><span className="note-icon"><BookOpen size={15} /></span><span>{t.heroBottomNote}</span><ArrowUpRight size={15} /></div>
