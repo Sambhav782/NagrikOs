@@ -9,7 +9,6 @@ export default function ShortsPage() {
   return (
     <section className="content-section route-section shorts-section">
       <div className="section-heading"><div><div className="section-eyebrow">{t.informationNotNoise}</div><h2>{t.shorts}</h2><p>{t.shortsSub}</p></div><span className="section-chip"><PlayCircle size={15} /> {t.quickReads}</span></div>
-      <div className="event-source-note"><strong>Curated demo news</strong><span>Summaries are written in advance for this prototype. Each article links to an official government source; dates and availability should be verified there.</span></div>
       <div className="shorts-grid">
         {updates.map((item, index) => {
           const Icon = icons[index % icons.length];
