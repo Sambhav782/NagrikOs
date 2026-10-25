@@ -19,10 +19,6 @@ export default function EventsPage() {
           {t.governmentEvents} <ArrowUpRight size={16} />
         </a>
       </div>
-      <div className="event-source-note">
-        <strong>{t.officialSourceListings}</strong>
-        <span>{t.eventFreshnessNote}</span>
-      </div>
       <div className="events-grid">
         {events.map((item, index) => {
           const Icon = icons[index % icons.length];
