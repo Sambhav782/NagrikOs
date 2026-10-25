@@ -26,7 +26,7 @@ export default function SchemeCard({ scheme }) {
     <article className="scheme-card">
       <div className="scheme-card-top">
         <div className={`category-icon icon-${iconClass}`}><Icon size={21} /></div>
-        <span className="category-pill">{scheme.category}</span>
+        <span className="category-pill">{t.categories?.[scheme.category] || scheme.category}</span>
       </div>
       <h3>{scheme.name}</h3>
       <p>{scheme.summary}</p>
