@@ -8,7 +8,7 @@ export default function ShortsPage() {
 
   return (
     <section className="content-section route-section shorts-section">
-      <div className="section-heading"><div><div className="section-eyebrow">INFORMATION, NOT NOISE</div><h2>{t.shorts}</h2><p>{t.shortsSub}</p></div><span className="section-chip"><PlayCircle size={15} /> QUICK READS</span></div>
+      <div className="section-heading"><div><div className="section-eyebrow">{t.informationNotNoise}</div><h2>{t.shorts}</h2><p>{t.shortsSub}</p></div><span className="section-chip"><PlayCircle size={15} /> {t.quickReads}</span></div>
       <div className="shorts-grid">
         {updates.map((item, index) => {
           const Icon = icons[index % icons.length];
@@ -24,7 +24,7 @@ export default function ShortsPage() {
           );
         })}
       </div>
-      {!updates.length && <div className="empty-state"><BookOpen size={25} /><strong>No explainers are available right now.</strong></div>}
+      {!updates.length && <div className="empty-state"><BookOpen size={25} /><strong>{t.noExplainers}</strong></div>}
     </section>
   );
 }
