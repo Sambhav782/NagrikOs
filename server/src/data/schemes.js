@@ -102,8 +102,7 @@ const schemeRecords = [
     documents: ['Bank or post office savings account', 'Identity and KYC documents', 'Mobile number'],
     officialUrl: 'https://www.npscra.nsdl.co.in/scheme-details.php',
     tags: ['pension', 'retirement', 'savings', 'worker']
-  }
-
+  },
   {
     id: 'pm-vishwakarma',
     name: 'PM Vishwakarma',
