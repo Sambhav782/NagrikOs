@@ -36,7 +36,7 @@ export default function HomePage() {
             <Link className="btn-primary" to="/schemes">{t.explore}<ArrowRight size={17} /></Link>
             <a className="btn-ghost" href="#how-it-works">{t.how}<ArrowDownRight size={17} /></a>
           </div>
-          <div className="hero-proof"><ShieldCheck size={16} /><span>{t.verifiedSub}</span><span className="proof-separator">•</span><span>Built for every citizen</span></div>
+          <div className="hero-proof"><ShieldCheck size={16} /><span>{t.verifiedSub}</span><span className="proof-separator">•</span><span>{t.builtForCitizens}</span></div>
         </div>
         <div className="hero-art" aria-hidden="true">
           <div className="orbit orbit-one" /><div className="orbit orbit-two" />
@@ -49,21 +49,21 @@ export default function HomePage() {
           <div className="floating-card float-verified"><span className="verified-seal"><ShieldCheck size={18} /></span><span><b>Official links</b><small>Trust, not guesswork</small></span></div>
           <div className="hero-spark spark-a">✳</div><div className="hero-spark spark-b">✦</div>
         </div>
-        <div className="hero-bottom-note"><span className="note-icon"><BookOpen size={15} /></span><span>Learn it. Check it. Apply with confidence.</span><ArrowUpRight size={15} /></div>
+        <div className="hero-bottom-note"><span className="note-icon"><BookOpen size={15} /></span><span>{t.heroBottomNote}</span><ArrowUpRight size={15} /></div>
       </section>
 
       <section id="how-it-works" className="steps-strip">
-        <div className="step-intro"><span className="step-number">01 — 03</span><strong>One simple path to support</strong><span>From discovery to your next step.</span></div>
-        <div className="step"><span className="step-icon step-blue"><Search size={18} /></span><div><b>Discover</b><small>Find relevant schemes</small></div></div>
+        <div className="step-intro"><span className="step-number">01 — 03</span><strong>{t.stepsTitle}</strong><span>{t.stepsSubtitle}</span></div>
+        <div className="step"><span className="step-icon step-blue"><Search size={18} /></span><div><b>{t.discover}</b><small>{t.discoverSub}</small></div></div>
         <ArrowRight className="step-arrow" size={17} />
-        <div className="step"><span className="step-icon step-green"><ClipboardCheck size={18} /></span><div><b>Understand</b><small>Review eligibility & docs</small></div></div>
+        <div className="step"><span className="step-icon step-green"><ClipboardCheck size={18} /></span><div><b>{t.understand}</b><small>{t.understandSub}</small></div></div>
         <ArrowRight className="step-arrow" size={17} />
-        <div className="step"><span className="step-icon step-orange"><ExternalLink size={18} /></span><div><b>Take action</b><small>Visit official portals</small></div></div>
+        <div className="step"><span className="step-icon step-orange"><ExternalLink size={18} /></span><div><b>{t.takeAction}</b><small>{t.takeActionSub}</small></div></div>
       </section>
 
       <section className="content-section">
         <div className="section-heading">
-          <div><div className="section-eyebrow">MADE FOR YOUR NEEDS</div><h2>{t.schemes}</h2><p>{t.schemesSub}</p></div>
+          <div><div className="section-eyebrow">{t.madeForNeeds}</div><h2>{t.schemes}</h2><p>{t.schemesSub}</p></div>
           <Link className="section-link" to="/schemes">{t.viewAll}<ArrowRight size={16} /></Link>
         </div>
         {featuredSchemes.length > 0 ? (
@@ -71,13 +71,13 @@ export default function HomePage() {
         ) : (
           <div className="empty-state"><Search size={26} /><strong>{t.apiOffline}</strong></div>
         )}
-        <div className="section-footnote"><ShieldCheck size={15} /><span>Scheme summaries are for orientation. Confirm rules, benefits and deadlines on the official website.</span></div>
+        <div className="section-footnote"><ShieldCheck size={15} /><span>{t.schemeSummaryNote}</span></div>
       </section>
 
       <section className="eligibility-banner">
         <div className="eligibility-art"><div className="elig-circle circle-one" /><div className="elig-circle circle-two" /><div className="elig-paper"><FileCheck2 size={29} /><span /><span /><span /></div><div className="elig-check"><Check size={18} /></div></div>
-        <div className="eligibility-copy"><span className="section-eyebrow">YOUR NEXT STEP</span><h2>Not sure where you qualify?</h2><p>Answer a few simple questions to get a preliminary checklist and links to official requirements.</p><Link className="btn-primary" to="/eligibility">{t.check}<ArrowRight size={17} /></Link></div>
-        <div className="eligibility-side-note"><ShieldCheck size={18} /><span>Guidance, not a final decision</span></div>
+        <div className="eligibility-copy"><span className="section-eyebrow">{t.yourNextStep}</span><h2>{t.unsureEligibility}</h2><p>{t.eligibilityIntro}</p><Link className="btn-primary" to="/eligibility">{t.check}<ArrowRight size={17} /></Link></div>
+        <div className="eligibility-side-note"><ShieldCheck size={18} /><span>{t.guidanceDisclaimer}</span></div>
       </section>
     </>
   );
