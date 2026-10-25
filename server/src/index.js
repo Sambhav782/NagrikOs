@@ -6,7 +6,7 @@ import { news } from './data/news.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const LIBRETRANSLATE_URL = (process.env.LIBRETRANSLATE_URL || '').replace(/\/$/, '');
+const LIBRETRANSLATE_URL = (process.env.LIBRETRANSLATE_URL || 'https://translate.argosopentech.com').replace(/\/$/, '');
 const translatedNewsCache = new Map();
 
 app.use(cors({ origin: process.env.CLIENT_ORIGIN ? process.env.CLIENT_ORIGIN.split(',') : true }));
@@ -132,10 +132,6 @@ app.post('/api/translate/news/:id', async (req, res) => {
   if (targetLanguage !== 'hi') return res.status(400).json({ error: 'Only Hindi translation is enabled in this demo.' });
   const article = news.find((item) => item.id === req.params.id);
   if (!article) return res.status(404).json({ error: 'News article not found.' });
-  if (!LIBRETRANSLATE_URL) {
-    return res.status(503).json({ error: 'LibreTranslate is not configured. Start LibreTranslate and set LIBRETRANSLATE_URL in the server environment.' });
-  }
-
   const cacheKey = `${article.id}:hi`;
   if (translatedNewsCache.has(cacheKey)) return res.json({ data: translatedNewsCache.get(cacheKey), cached: true });
 
