@@ -39,17 +39,17 @@ export default function AlertsPage() {
     <section className="alerts-section route-section alerts-page">
       <div className="alerts-art"><div className="alert-ring ring-one" /><div className="alert-ring ring-two" /><div className="alert-bell"><Bell size={32} /><span /></div><div className="alert-star">✦</div></div>
       <div className="alerts-content">
-        <span className="section-eyebrow">YOUR PREFERENCES</span><h2>{t.alerts}</h2><p>{t.alertsSub}</p>
+        <span className="section-eyebrow">{t.yourPreferences}</span><h2>{t.alerts}</h2><p>{t.alertsSub}</p>
 
         {user ? (
           <section className="scheme-alerts-panel" aria-labelledby="scheme-alerts-title">
             <div className="scheme-alerts-heading">
               <div>
-                <span className="section-eyebrow">PERSONALISED FOR {user.username.toUpperCase()}</span>
-                <h3 id="scheme-alerts-title">Scholarship alerts</h3>
-                <p>We’ve added alerts for these three scholarship options to your list.</p>
+                <span className="section-eyebrow">{t.personalizedFor} {user.username.toUpperCase()}</span>
+                <h3 id="scheme-alerts-title">{t.scholarshipAlerts}</h3>
+                <p>{t.alertsAddedNote}</p>
               </div>
-              <span className="scheme-alerts-count">3 alerts</span>
+              <span className="scheme-alerts-count">{t.threeAlerts}</span>
             </div>
             <div className="scheme-alert-list">
               {studentSchemeAlerts.map((item) => {
@@ -60,9 +60,9 @@ export default function AlertsPage() {
                     <div className="scheme-alert-copy">
                       <h4>{item.name}</h4>
                       <p>{item.description}</p>
-                      <a href={item.url} target="_blank" rel="noreferrer">View official portal <ExternalLink size={13} /></a>
+                      <a href={item.url} target="_blank" rel="noreferrer">{t.viewOfficialPortal} <ExternalLink size={13} /></a>
                     </div>
-                    <span className="scheme-alert-status"><CheckCircle2 size={14} /> Alert added</span>
+                    <span className="scheme-alert-status"><CheckCircle2 size={14} /> {t.alertAdded}</span>
                   </article>
                 );
               })}
@@ -71,7 +71,7 @@ export default function AlertsPage() {
           </section>
         ) : (
           <>
-            <p className="scheme-alert-signin">Sign in to view scholarship alerts personalised for your student profile.</p>
+            <p className="scheme-alert-signin">{t.signInForAlerts}</p>
             <form onSubmit={subscribe} className="alerts-form">
               <label className="sr-only" htmlFor="alert-email">{t.email}</label>
               <input id="alert-email" type="email" required placeholder={t.email} value={email} onChange={(event) => setEmail(event.target.value)} />
@@ -85,7 +85,7 @@ export default function AlertsPage() {
               ))}
             </div>
             {alertMessage && <p className="alert-feedback" role="status">{alertMessage}</p>}
-            <p className="alert-disclaimer"><ShieldCheck size={13} /> You can change your selected topics any time.</p>
+            <p className="alert-disclaimer"><ShieldCheck size={13} /> {t.changeTopicsAnytime}</p>
           </>
         )}
       </div>
