@@ -11,17 +11,17 @@ export default function EventsPage() {
     <section className="content-section route-section events-section">
       <div className="section-heading">
         <div>
-          <div className="section-eyebrow">BUILD, LEARN, PARTICIPATE</div>
+          <div className="section-eyebrow">{t.buildLearnParticipate}</div>
           <h2>{t.events}</h2>
           <p>{t.eventsSub}</p>
         </div>
         <a className="section-link" href="https://event.data.gov.in/" target="_blank" rel="noreferrer">
-          Government events <ArrowUpRight size={16} />
+          {t.governmentEvents} <ArrowUpRight size={16} />
         </a>
       </div>
       <div className="event-source-note">
-        <strong>Official-source listings</strong>
-        <span>Some editions have ended. Open the official source to check the latest deadlines and future editions before applying.</span>
+        <strong>{t.officialSourceListings}</strong>
+        <span>{t.eventFreshnessNote}</span>
       </div>
       <div className="events-grid">
         {events.map((item, index) => {
@@ -35,12 +35,12 @@ export default function EventsPage() {
               <div className="event-organizer">{item.organizer}</div>
               <div className="event-location"><MapPin size={13} />{item.location}</div>
               <div className="event-date"><CalendarDays size={14} />{item.dateLabel}</div>
-              <a href={item.officialUrl} target="_blank" rel="noreferrer" className="event-link">Check official details <ArrowUpRight size={15} /></a>
+              <a href={item.officialUrl} target="_blank" rel="noreferrer" className="event-link">{t.checkOfficialDetails} <ArrowUpRight size={15} /></a>
             </article>
           );
         })}
       </div>
-      {!events.length && <div className="empty-state"><Landmark size={25} /><strong>No events are available right now.</strong></div>}
+      {!events.length && <div className="empty-state"><Landmark size={25} /><strong>{t.noEvents}</strong></div>}
     </section>
   );
 }
