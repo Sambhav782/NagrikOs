@@ -3,10 +3,39 @@ import { translations } from '../data/translations.js';
 
 const API_BASE = (import.meta.env.VITE_API_BASE || (import.meta.env.PROD ? 'https://nagrikos-oq90.onrender.com/api' : '/api')).replace(/\/$/, '');
 const AppContext = createContext(null);
+const SUPPORTED_LANGUAGES = ['en', 'hi', 'ta'];
+const LANGUAGE_STORAGE_KEY = 'nagrikos-language';
+
+function getInitialLanguage() {
+  if (typeof window === 'undefined') return 'en';
+  try {
+    const savedLanguage = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+    return SUPPORTED_LANGUAGES.includes(savedLanguage) ? savedLanguage : 'en';
+  } catch {
+    return 'en';
+  }
+}
 
 // Centralize shared data and actions so pages stay focused on presentation.
 export function AppProvider({ children }) {
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguageState] = useState(getInitialLanguage);
+
+  const setLanguage = useCallback((nextLanguage) => {
+    if (!SUPPORTED_LANGUAGES.includes(nextLanguage)) return;
+    setLanguageState(nextLanguage);
+    try {
+      window.localStorage.setItem(LANGUAGE_STORAGE_KEY, nextLanguage);
+    } catch {
+      // Storage may be blocked by browser privacy settings; keep the in-memory selection.
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = language;
+    }
+  }, [language]);
+
   // Temporary frontend sign-in state; replace with secure authentication before production.
   const [user, setUser] = useState(null);
   const signIn = useCallback((username, password) => {
@@ -107,7 +136,7 @@ export function AppProvider({ children }) {
     eligibility, setEligibility, form, setForm, runEligibility, startCheck,
     email, setEmail, topics, setTopics, alertMessage, subscribe
   }), [
-    language, t, user, signIn, signOut, schemes, updates, events, apiOffline, selectedScheme,
+    language, setLanguage, t, user, signIn, signOut, schemes, updates, events, apiOffline, selectedScheme,
     eligibility, form, runEligibility, startCheck, email, topics, alertMessage, subscribe
   ]);
 
