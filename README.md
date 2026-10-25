@@ -8,19 +8,19 @@ NagrikOS is a citizen-first public-service prototype that brings Indian governme
 
 ## Features in the current prototype
 
-- Responsive React interface with English, Hindi, and Tamil language selection
+- Responsive React interface with English and Hindi language selection
 - Language preference persists across page refreshes and updates the document language for accessibility
 - Scheme directory with search, category filters, summaries, requirements, and official links
 - Rule-based preliminary eligibility guidance, document checklists, and alternative scheme suggestions
-- Government Shorts/update feed with source links
+- Curated news feed with 20 prewritten summaries, dynamic article-detail pages, and official source links
 - Curated public events and resources
 - Presentation-only sign-in state with student-focused scholarship recommendations
 - Scholarship opportunities listed on the signed-in Alerts page
 - Email and topic preference form for signed-out visitors; the API validates preferences but does **not** send email or store subscriptions
 - Express API health endpoint and curated data endpoints
-- No database or third-party API key required for local development
+- Curated data needs no database. Optional Hindi article translation uses the free, self-hosted LibreTranslate service; no LLM is used
 
-> **Translation scope:** Shared interface labels and primary flows are translated. Curated scheme names, descriptions, and some informational copy supplied by the API remain in their original language until translated source records are added. Always refer to linked official sources for authoritative wording.
+> **Translation scope:** Shared interface labels use the built-in English/Hindi dictionary. News article content can be machine-translated into Hindi through a separately running LibreTranslate instance. Translation may be imperfect; verify important details with the linked official source.
 
 ## Technology
 
@@ -58,7 +58,7 @@ Local URLs:
 - API health: http://localhost:5000/api/health
 - Scheme list: http://localhost:5000/api/schemes
 
-The Vite development server proxies `/api` requests to the Express API on port 5000. The API reads curated records from `server/src/data/schemes.js`; no database setup is needed.
+The Vite development server proxies `/api` requests to the Express API on port 5000. Scheme and event records live in `server/src/data/schemes.js`; the 20 curated news articles live in `server/src/data/news.js`. No database setup is needed.
 
 ### Environment variables
 
@@ -66,9 +66,21 @@ Use the example files as a guide:
 
 - `PORT` — backend port (defaults to `5000`)
 - `CLIENT_ORIGIN` — optional comma-separated list of allowed frontend origins
+- `LIBRETRANSLATE_URL` — optional base URL for a self-hosted LibreTranslate service, e.g. `http://localhost:5001`
 - `VITE_API_BASE` — optional frontend API base URL; for a separately deployed API, set it to the API URL ending in `/api`, such as `https://your-api.example.com/api`
 
 If you change `VITE_API_BASE`, rebuild the frontend.
+
+### Optional free Hindi article translation
+
+LibreTranslate is open-source and can run locally without a paid translation API. Install it with Python 3.8+ and run it on a port different from the NagrikOS API:
+
+```bash
+pip install libretranslate
+libretranslate --host 127.0.0.1 --port 5001 --load-only en,hi
+```
+
+In another terminal, set `LIBRETRANSLATE_URL=http://localhost:5001` in `server/.env`, then restart the Express server. The detail page requests translation only when Hindi is selected. If LibreTranslate is not running or configured, the page shows the original English content and a fallback notice. For deployment, host LibreTranslate separately and set `LIBRETRANSLATE_URL` to its reachable base URL; the software is free but still uses server resources.
 
 ## API reference
 
@@ -77,7 +89,8 @@ If you change `VITE_API_BASE`, rebuild the frontend.
 | GET | `/api/health` | API health/status |
 | GET | `/api/schemes?q=&category=` | Search/filter curated schemes |
 | GET | `/api/schemes/:id` | Retrieve one scheme |
-| GET | `/api/updates` | Read curated public updates |
+| GET | `/api/updates` | Read 20 curated news articles and prewritten summaries |
+| POST | `/api/translate/news/:id` | Translate one news article into Hindi using LibreTranslate when configured |
 | GET | `/api/events` | Read curated events |
 | POST | `/api/eligibility/check` | Return preliminary rule-based guidance and possible alternatives |
 | POST | `/api/alerts/subscribe` | Validate email/topic preferences; does not send email or persist a subscription |
@@ -111,7 +124,7 @@ GitHub Actions is configured to run project checks on pushes and pull requests.
 - **Eligibility:** The rule engine only evaluates a subset of profile fields and simplified rules. It is not an official eligibility decision and may not cover all scheme conditions.
 - **Personalization/sign-in:** The current sign-in is a hardcoded, client-side presentation flow. It is not secure authentication, and session state is not backed by a real account service.
 - **Alerts:** The signed-in page displays scholarship opportunities; it does not send automated notifications. The signed-out form validates preferences only, with no email delivery or persistent subscription storage.
-- **Content freshness:** Scheme, update, and event records are curated static content, not a live feed. Verify source links and current notifications before relying on information.
+- **Content freshness:** Scheme, news, and event records are curated static content, not a live feed. The 20 news entries include prewritten summaries and links to official government sources. Verify source links and current notifications before relying on information.
 - **Production readiness:** Before real public use, add verified and regularly refreshed official data, persistent storage, secure authentication where needed, a notification provider, accessibility/security/privacy reviews, and scheme-specific validation.
 
 Do not use this prototype to make final decisions about eligibility or submit sensitive personal information.
@@ -133,6 +146,8 @@ server/
     index.js
     data/schemes.js
     data/schemes.test.js
+    data/news.js
+    data/news.test.js
 ```
 
 Built by **Team Technox**.
