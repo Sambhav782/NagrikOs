@@ -1,10 +1,13 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import { schemes, updates, events } from './data/schemes.js';
+import { schemes, events } from './data/schemes.js';
+import { news } from './data/news.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const LIBRETRANSLATE_URL = (process.env.LIBRETRANSLATE_URL || '').replace(/\/$/, '');
+const translatedNewsCache = new Map();
 
 app.use(cors({ origin: process.env.CLIENT_ORIGIN ? process.env.CLIENT_ORIGIN.split(',') : true }));
 app.use(express.json({ limit: '1mb' }));
@@ -124,7 +127,43 @@ app.post('/api/eligibility/check', (req, res) => {
   });
 });
 
-app.get('/api/updates', (_req, res) => res.json({ data: updates }));
+app.post('/api/translate/news/:id', async (req, res) => {
+  const { targetLanguage = 'hi' } = req.body || {};
+  if (targetLanguage !== 'hi') return res.status(400).json({ error: 'Only Hindi translation is enabled in this demo.' });
+  const article = news.find((item) => item.id === req.params.id);
+  if (!article) return res.status(404).json({ error: 'News article not found.' });
+  if (!LIBRETRANSLATE_URL) {
+    return res.status(503).json({ error: 'LibreTranslate is not configured. Start LibreTranslate and set LIBRETRANSLATE_URL in the server environment.' });
+  }
+
+  const cacheKey = `${article.id}:hi`;
+  if (translatedNewsCache.has(cacheKey)) return res.json({ data: translatedNewsCache.get(cacheKey), cached: true });
+
+  try {
+    const fields = ['title', 'description', 'summary', 'fullContent', 'ministry', 'category'];
+    const translatedFields = await Promise.all(fields.map(async (field) => {
+      const value = article[field];
+      if (!value) return [field, value];
+      const response = await fetch(`${LIBRETRANSLATE_URL}/translate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ q: value, source: 'en', target: 'hi', format: 'text' })
+      });
+      if (!response.ok) throw new Error(`LibreTranslate returned HTTP ${response.status}`);
+      const payload = await response.json();
+      if (!payload.translatedText) throw new Error('LibreTranslate returned an empty translation.');
+      return [field, payload.translatedText];
+    }));
+    const translatedArticle = { ...article, ...Object.fromEntries(translatedFields) };
+    translatedNewsCache.set(cacheKey, translatedArticle);
+    res.json({ data: translatedArticle, cached: false });
+  } catch (error) {
+    console.error('News translation failed:', error.message);
+    res.status(502).json({ error: 'Hindi translation failed. Please try again later.' });
+  }
+});
+
+app.get('/api/updates', (_req, res) => res.json({ data: news }));
 app.get('/api/events', (_req, res) => res.json({ data: events }));
 
 app.post('/api/alerts/subscribe', (req, res) => {
