@@ -73,14 +73,14 @@ If you change `VITE_API_BASE`, rebuild the frontend.
 
 ### Optional free Hindi article translation
 
-LibreTranslate is open-source and can run locally without a paid translation API. Install it with Python 3.8+ and run it on a port different from the NagrikOS API:
+LibreTranslate is open-source. The demo tries the community-hosted `https://translate.argosopentech.com` mirror by default, but that service may be rate-limited or unavailable. For predictable local development, you can run your own instance without a paid translation API. Install it with Python 3.8+ and use a port different from the NagrikOS API:
 
 ```bash
 pip install libretranslate
 libretranslate --host 127.0.0.1 --port 5001 --load-only en,hi
 ```
 
-In another terminal, set `LIBRETRANSLATE_URL=http://localhost:5001` in `server/.env`, then restart the Express server. The detail page requests translation only when Hindi is selected. If LibreTranslate is not running or configured, the page shows the original English content and a fallback notice. For deployment, host LibreTranslate separately and set `LIBRETRANSLATE_URL` to its reachable base URL; the software is free but still uses server resources.
+In another terminal, set `LIBRETRANSLATE_URL=http://localhost:5001` in `server/.env`, then restart the Express server. The detail page requests translation only when Hindi is selected. If translation fails, the page shows the original English content and a fallback notice. For more reliable deployment, host LibreTranslate separately and set `LIBRETRANSLATE_URL` to its reachable base URL; the software is free but still uses server resources. The community mirror is a best-effort demo default, not a production SLA.
 
 ## API reference
 
