@@ -62,18 +62,18 @@ export default function EligibilityPage() {
     <section className="content-section route-section eligibility-section">
       <div className="section-heading">
         <div>
-          <div className="section-eyebrow">PERSONALISED GUIDANCE</div>
+          <div className="section-eyebrow">{t.personalizedGuidance}</div>
           <h2>{t.eligibility}</h2>
-          <p>{user ? 'Your profile is set up as a B.Tech student. Here are the most relevant scholarship options to investigate.' : 'Answer only what you are comfortable sharing. Your answers are used only to generate guidance and are not stored.'}</p>
+          <p>{user ? t.studentProfileIntro : t.privacyFormIntro}</p>
         </div>
-        <span className="private-note"><ShieldCheck size={15} /> {user ? 'Personal profile' : 'Not stored'}</span>
+        <span className="private-note"><ShieldCheck size={15} /> {user ? t.personalProfile : t.notStored}</span>
       </div>
 
       {user ? (
         <div className="personalized-schemes">
           <div className="personalized-intro">
             <div className="personalized-avatar"><GraduationCap size={22} /></div>
-            <div><span className="section-eyebrow">RECOMMENDED FOR {user.username.toUpperCase()}</span><h3>Scholarships to check first</h3><p>Based on your B.Tech-student profile—not on assumed income, marks, state or category.</p></div>
+            <div><span className="section-eyebrow">RECOMMENDED FOR {user.username.toUpperCase()}</span><h3>{t.scholarshipsToCheck}</h3><p>{t.studentProfileBasis}</p></div>
           </div>
           <div className="personalized-grid">
             {studentRecommendations.map((item, index) => {
@@ -85,37 +85,37 @@ export default function EligibilityPage() {
                   <h3>{item.name}</h3>
                   <p>{item.fit}</p>
                   <div className="personalized-next"><Check size={15} /><span>{item.nextStep}</span></div>
-                  <a className="btn-primary personalized-link" href={item.url} target="_blank" rel="noreferrer">Check official criteria <ExternalLink size={14} /></a>
+                  <a className="btn-primary personalized-link" href={item.url} target="_blank" rel="noreferrer">{t.checkOfficialCriteria} <ExternalLink size={14} /></a>
                 </article>
               );
             })}
           </div>
-          <div className="personalized-disclaimer"><CircleHelp size={16} /><p><strong>Important:</strong> These are relevant options, not a guarantee that you qualify. Confirm current criteria on the official portal. Sign out to return to the full eligibility form.</p></div>
+          <div className="personalized-disclaimer"><CircleHelp size={16} /><p><strong>{t.important}</strong> {t.eligibilityDisclaimer} {t.signOutForFullForm}</p></div>
         </div>
       ) : (
         <>
           <form className="eligibility-form" onSubmit={runEligibility}>
             <label className="field full-field"><span>{t.selectScheme}</span>
               <select required value={form.schemeId} onChange={(event) => updateField('schemeId', event.target.value)}>
-                <option value="">Select a scheme to review...</option>
+                <option value="">{t.selectSchemePrompt}</option>
                 {schemes.map((scheme) => <option key={scheme.id} value={scheme.id}>{scheme.name}</option>)}
               </select>
             </label>
             <label className="field"><span>{t.age}</span><input type="number" min="0" max="120" value={form.age} onChange={(event) => updateField('age', event.target.value)} /></label>
-            <label className="field"><span>{t.state}</span><input placeholder="e.g. Uttar Pradesh" value={form.state} onChange={(event) => updateField('state', event.target.value)} /></label>
+            <label className="field"><span>{t.state}</span><input placeholder={t.stateExample} value={form.state} onChange={(event) => updateField('state', event.target.value)} /></label>
             <label className="field"><span>{t.occupation}</span>
               <select value={form.occupation} onChange={(event) => updateField('occupation', event.target.value)}>
-                <option value="student">Student</option><option value="farmer">Farmer</option><option value="employed">Employed</option><option value="self-employed">Self-employed</option><option value="unemployed">Not currently employed</option><option value="other">Other</option>
+                <option value="student">{t.studentOccupation}</option><option value="farmer">{t.farmerOccupation}</option><option value="employed">{t.employedOccupation}</option><option value="self-employed">{t.selfEmployedOccupation}</option><option value="unemployed">{t.unemployedOccupation}</option><option value="other">{t.otherOccupation}</option>
               </select>
             </label>
             <label className="field"><span>{t.income}</span><input type="number" min="0" placeholder="Optional" value={form.annualIncome} onChange={(event) => updateField('annualIncome', event.target.value)} /></label>
             <label className="field"><span>{t.home}</span>
-              <select value={form.ownsHome} onChange={(event) => updateField('ownsHome', event.target.value)}><option value="no">No</option><option value="yes">Yes</option><option value="unsure">Not sure</option></select>
+              <select value={form.ownsHome} onChange={(event) => updateField('ownsHome', event.target.value)}><option value="no">{t.no}</option><option value="yes">{t.yes}</option><option value="unsure">{t.notSure}</option></select>
             </label>
             <label className="field"><span>{t.student}</span>
-              <select value={form.isStudent ? 'yes' : 'no'} onChange={(event) => updateField('isStudent', event.target.value === 'yes')}><option value="yes">Yes</option><option value="no">No</option></select>
+              <select value={form.isStudent ? 'yes' : 'no'} onChange={(event) => updateField('isStudent', event.target.value === 'yes')}><option value="yes">{t.yes}</option><option value="no">{t.no}</option></select>
             </label>
-            <div className="form-submit-row"><p><ShieldCheck size={15} /> Your answers are used only to generate guidance and are not stored.</p><button className="btn-primary" type="submit">{t.runCheck}<ClipboardCheck size={16} /></button></div>
+            <div className="form-submit-row"><p><ShieldCheck size={15} /> {t.answersNotStored}</p><button className="btn-primary" type="submit">{t.runCheck}<ClipboardCheck size={16} /></button></div>
           </form>
 
           {eligibility && (
@@ -128,7 +128,7 @@ export default function EligibilityPage() {
                     <div className={`eligibility-outcome ${status.className}`}>
                       <div className="outcome-icon"><StatusIcon size={25} /></div>
                       <div>
-                        <span className="section-eyebrow">YOUR RESULT</span>
+                        <span className="section-eyebrow">{t.yourResult}</span>
                         <h3>{status.title}</h3>
                         <p>{eligibility.scheme.name}</p>
                       </div>
@@ -138,24 +138,24 @@ export default function EligibilityPage() {
                     {eligibility.result === 'eligible' && (
                       <div className="result-columns">
                         <div><h4><Check size={16} />{t.requirements}</h4><ul>{(eligibility.checklist || []).map((item) => <li key={item}>{item}</li>)}</ul></div>
-                        <div><h4><FileText size={16} />Documents to prepare</h4><ul>{(eligibility.documents || []).map((item) => <li key={item}>{item}</li>)}</ul></div>
+                        <div><h4><FileText size={16} />{t.docs}</h4><ul>{(eligibility.documents || []).map((item) => <li key={item}>{item}</li>)}</ul></div>
                       </div>
                     )}
 
                     {eligibility.result === 'not_eligible' && (
                       <div className="alternative-schemes">
-                        <h4><ArrowRight size={16} />Schemes that may fit your profile</h4>
+                        <h4><ArrowRight size={16} />{t.alternativesTitle}</h4>
                         {eligibility.alternatives?.length ? (
                           <div className="alternative-list">
                             {eligibility.alternatives.map((alternative) => (
                               <article className="alternative-card" key={alternative.id}>
                                 <div><span className="category-pill">{alternative.category}</span><h5>{alternative.name}</h5><p>{alternative.reason}</p></div>
-                                <button type="button" className="btn-secondary" onClick={() => chooseAlternative(alternative.id)}>Check this scheme <ArrowRight size={14} /></button>
+                                <button type="button" className="btn-secondary" onClick={() => chooseAlternative(alternative.id)}>{t.checkThisScheme} <ArrowRight size={14} /></button>
                               </article>
                             ))}
                           </div>
                         ) : (
-                          <p>No close match was found from the answers provided. Try another scheme from the <Link to="/schemes">scheme directory</Link>.</p>
+                          <p>{t.noCloseMatch} <Link to="/schemes">scheme directory</Link>.</p>
                         )}
                       </div>
                     )}
@@ -163,12 +163,12 @@ export default function EligibilityPage() {
                     {eligibility.result === 'needs_verification' && (
                       <div className="verification-next-step">
                         <CircleHelp size={17} />
-                        <p>We cannot reliably decide this scheme from the current answers. Check the official criteria before applying.</p>
+                        <p>{t.needsOfficialVerification}</p>
                       </div>
                     )}
 
                     <div className="result-notes">{(eligibility.notes || []).map((note) => <p key={note}><CircleHelp size={15} />{note}</p>)}</div>
-                    <a className="btn-primary inline-btn" href={eligibility.scheme.officialUrl} target="_blank" rel="noreferrer">Open official scheme portal <ExternalLink size={15} /></a>
+                    <a className="btn-primary inline-btn" href={eligibility.scheme.officialUrl} target="_blank" rel="noreferrer">{t.openOfficialSchemePortal} <ExternalLink size={15} /></a>
                   </>
                 );
               })()}
