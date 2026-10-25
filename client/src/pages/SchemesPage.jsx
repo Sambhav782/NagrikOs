@@ -24,8 +24,8 @@ export default function SchemesPage() {
   return (
     <section className="content-section route-section">
       <div className="section-heading">
-        <div><div className="section-eyebrow">MADE FOR YOUR NEEDS</div><h2>{t.schemes}</h2><p>{t.schemesSub}</p></div>
-        <span className="section-chip">{filteredSchemes.length} schemes</span>
+        <div><div className="section-eyebrow">{t.madeForNeeds}</div><h2>{t.schemes}</h2><p>{t.schemesSub}</p></div>
+        <span className="section-chip">{filteredSchemes.length} {t.schemeCountLabel}</span>
       </div>
 
       <div className="search-filter-row">
@@ -35,7 +35,7 @@ export default function SchemesPage() {
           {query && <button type="button" onClick={() => setQuery('')} aria-label="Clear search"><X size={15} /></button>}
         </label>
         <label className="filter-select-label">
-          <span className="sr-only">Filter by category</span>
+          <span className="sr-only">{t.filterByCategory}</span>
           <select className="filter-button" value={category} onChange={(event) => setCategory(event.target.value)}>
             {categories.map((item) => <option key={item} value={item}>{item === 'All' ? t.all : item}</option>)}
           </select>
@@ -43,7 +43,7 @@ export default function SchemesPage() {
         </label>
       </div>
 
-      <div className="category-tabs" role="tablist" aria-label="Scheme categories">
+      <div className="category-tabs" role="tablist" aria-label={t.schemeCategories}>
         {categories.map((item) => (
           <button key={item} type="button" role="tab" aria-selected={category === item} className={category === item ? 'selected' : ''} onClick={() => setCategory(item)}>
             {item === 'All' ? t.all : item}
@@ -56,7 +56,7 @@ export default function SchemesPage() {
       ) : (
         <div className="empty-state"><Search size={26} /><strong>{t.noResults}</strong><button className="text-button" onClick={resetFilters}>{t.reset}</button></div>
       )}
-      <div className="section-footnote"><ShieldCheck size={15} /><span>Demo dataset: verify eligibility and current deadlines through each scheme's official portal.</span><ArrowRight size={14} /></div>
+      <div className="section-footnote"><ShieldCheck size={15} /><span>{t.demoDatasetNote}</span><ArrowRight size={14} /></div>
     </section>
   );
 }
