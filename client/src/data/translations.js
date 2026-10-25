@@ -153,7 +153,12 @@ export const translations = {
     pageNotFoundDetails: "The link may be outdated or the address may be incorrect.",
     categories: { "Education": "Education", "Health": "Health", "Housing": "Housing", "Agriculture": "Agriculture", "Business": "Business", "Women & Family": "Women & Family", "Pension": "Pension" },
     optional: "Optional",
-    personalizedForPrefix: "PERSONALISED FOR"
+    personalizedForPrefix: "PERSONALISED FOR",
+    eligibilityGuide: "Eligibility guide",
+    stepByStepHelp: "Step-by-step help",
+    officialLinks: "Official links",
+    trustNotGuesswork: "Trust, not guesswork",
+    potentialMatchesDisclaimer: "These are potential matches, not confirmation of eligibility. Verify the current official criteria before applying."
   },
   hi: {
     tagline: "सरकारी सेवाएँ, अब आसान।",
@@ -307,7 +312,12 @@ export const translations = {
     pageNotFoundDetails: "लिंक पुराना हो सकता है या पता गलत हो सकता है।",
     categories: { "Education": "शिक्षा", "Health": "स्वास्थ्य", "Housing": "आवास", "Agriculture": "कृषि", "Business": "व्यवसाय", "Women & Family": "महिलाएँ और परिवार", "Pension": "पेंशन" },
     optional: "वैकल्पिक",
-    personalizedForPrefix: "इनके लिए व्यक्तिगत"
+    personalizedForPrefix: "इनके लिए व्यक्तिगत",
+    eligibilityGuide: "पात्रता मार्गदर्शिका",
+    stepByStepHelp: "चरण-दर-चरण सहायता",
+    officialLinks: "आधिकारिक लिंक",
+    trustNotGuesswork: "अनुमान नहीं, भरोसेमंद जानकारी",
+    potentialMatchesDisclaimer: "ये संभावित विकल्प हैं, पात्रता की पुष्टि नहीं। आवेदन से पहले वर्तमान आधिकारिक मानदंड जाँचें।"
   },
   ta: {
     tagline: "பொதுச் சேவைகள், இனி எளிதாக.",
@@ -463,4 +473,9 @@ export const translations = {
   }
 };,
     optional: "விருப்பத்திற்குரியது",
-    personalizedForPrefix: "தனிப்பயனாக்கப்பட்டது:"
+    personalizedForPrefix: "தனிப்பயனாக்கப்பட்டது:",
+    eligibilityGuide: "தகுதி வழிகாட்டி",
+    stepByStepHelp: "படிப்படியான உதவி",
+    officialLinks: "அதிகாரப்பூர்வ இணைப்புகள்",
+    trustNotGuesswork: "ஊகம் அல்ல, நம்பகமான தகவல்",
+    potentialMatchesDisclaimer: "இவை சாத்தியமான பொருத்தங்கள் மட்டுமே; தகுதி உறுதி அல்ல. விண்ணப்பிக்கும் முன் தற்போதைய அதிகாரப்பூர்வ நிபந்தனைகளைச் சரிபார்க்கவும்."
