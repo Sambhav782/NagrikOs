@@ -67,7 +67,7 @@ export default function AlertsPage() {
                 );
               })}
             </div>
-            <p className="scheme-alert-note"><ShieldCheck size={14} /> These are potential matches, not confirmation of eligibility. Verify the current official criteria before applying.</p>
+            <p className="scheme-alert-note"><ShieldCheck size={14} /> {t.potentialMatchesDisclaimer}</p>
           </section>
         ) : (
           <>
