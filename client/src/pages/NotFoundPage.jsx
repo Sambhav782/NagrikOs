@@ -10,8 +10,8 @@ export default function NotFoundPage() {
     <section className="content-section route-section not-found-page">
       <div className="empty-state">
         <Search size={30} />
-        <strong>We couldn't find that page.</strong>
-        <p>The link may be outdated or the address may be incorrect.</p>
+        <strong>{t.pageNotFound}</strong>
+        <p>{t.pageNotFoundDetails}</p>
         <Link className="btn-primary" to="/"><ArrowLeft size={16} />{t.backHome}</Link>
       </div>
     </section>

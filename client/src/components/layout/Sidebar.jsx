@@ -20,15 +20,15 @@ export default function Sidebar({ open, onNavigate }) {
 
   return (
     <>
-      {open && <button className="sidebar-scrim" aria-label="Close navigation" onClick={onNavigate} />}
+      {open && <button className="sidebar-scrim" aria-label={t.closeNavigation} onClick={onNavigate} />}
       <aside className={`sidebar ${open ? 'sidebar-open' : ''}`}>
         <NavLink className="brand" to="/" onClick={onNavigate}>
           <span className="brand-mark"><Landmark size={24} strokeWidth={2.2} /></span>
-          <span className="brand-word">nagrik<span>OS</span><small>YOUR CITIZEN COMPANION</small></span>
+          <span className="brand-word">nagrik<span>OS</span><small>{t.brandSubtitle}</small></span>
         </NavLink>
 
-        <div className="side-label">WORKSPACE</div>
-        <nav className="side-nav" aria-label="Main navigation">
+        <div className="side-label">{t.workspace}</div>
+        <nav className="side-nav" aria-label={t.mainNavigation}>
           {navigation.map(({ to, key, icon: Icon, end }) => (
             <NavLink
               key={to}
@@ -47,15 +47,15 @@ export default function Sidebar({ open, onNavigate }) {
         <div className="sidebar-bottom">
           <div className="help-card">
             <div className="help-icon"><ShieldCheck size={18} /></div>
-            <strong>Stay informed. Stay safe.</strong>
-            <p>Use verified links. Never share your OTP with anyone.</p>
+            <strong>{t.safetyTitle}</strong>
+            <p>{t.safetyCopy}</p>
             <a href="https://www.cybercrime.gov.in/" target="_blank" rel="noreferrer">
-              Safety resources <ArrowUpRight size={13} />
+              {t.safetyResources} <ArrowUpRight size={13} />
             </a>
           </div>
           <div className="sidebar-footer">
             <span className="online-dot" />
-            <span>Citizen-first information</span>
+            <span>{t.citizenFirst}</span>
             <CircleHelp size={15} />
           </div>
         </div>

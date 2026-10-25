@@ -3,11 +3,27 @@ import { translations } from '../data/translations.js';
 
 const API_BASE = (import.meta.env.VITE_API_BASE || (import.meta.env.PROD ? 'https://nagrikos-oq90.onrender.com/api' : '/api')).replace(/\/$/, '');
 const AppContext = createContext(null);
+const SUPPORTED_LANGUAGES = ['en', 'hi'];
+const LANGUAGE_STORAGE_KEY = 'nagrikos-language';
 
-// Centralize shared data and actions so pages stay focused on presentation.
+function getInitialLanguage() {
+  if (typeof window === 'undefined') return 'en';
+  try {
+    const savedLanguage = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+    return SUPPORTED_LANGUAGES.includes(savedLanguage) ? savedLanguage : 'en';
+  } catch { return 'en'; }
+}
+
 export function AppProvider({ children }) {
-  const [language, setLanguage] = useState('en');
-  // Temporary frontend sign-in state; replace with secure authentication before production.
+  const [language, setLanguageState] = useState(getInitialLanguage);
+  const setLanguage = useCallback((nextLanguage) => {
+    if (!SUPPORTED_LANGUAGES.includes(nextLanguage)) return;
+    setLanguageState(nextLanguage);
+    try { window.localStorage.setItem(LANGUAGE_STORAGE_KEY, nextLanguage); } catch { /* Keep in-memory selection if storage is blocked. */ }
+  }, []);
+
+  useEffect(() => { if (typeof document !== 'undefined') document.documentElement.lang = language; }, [language]);
+
   const [user, setUser] = useState(null);
   const signIn = useCallback((username, password) => {
     if (String(username).trim().toLowerCase() !== 'sambhav' || password !== '123456') return false;
@@ -21,100 +37,64 @@ export function AppProvider({ children }) {
   const [apiOffline, setApiOffline] = useState(false);
   const [selectedScheme, setSelectedScheme] = useState(null);
   const [eligibility, setEligibility] = useState(null);
-  const [form, setForm] = useState({
-    schemeId: '',
-    age: '22',
-    state: '',
-    occupation: 'student',
-    annualIncome: '',
-    ownsHome: 'no',
-    isStudent: true
-  });
+  const [form, setForm] = useState({ schemeId:'', age:'22', state:'', occupation:'student', annualIncome:'', ownsHome:'no', isStudent:true });
   const [email, setEmail] = useState('');
   const [topics, setTopics] = useState(['Education', 'Health']);
   const [alertMessage, setAlertMessage] = useState('');
   const t = translations[language];
 
-  // Fetch the three read-only collections once for the whole app.
   useEffect(() => {
     const controller = new AbortController();
-
     Promise.all([
       fetch(`${API_BASE}/schemes`, { signal: controller.signal }).then(checkResponse),
       fetch(`${API_BASE}/updates`, { signal: controller.signal }).then(checkResponse),
       fetch(`${API_BASE}/events`, { signal: controller.signal }).then(checkResponse)
-    ])
-      .then(([schemeResponse, updateResponse, eventResponse]) => {
-        setSchemes(schemeResponse.data || []);
-        setUpdates(updateResponse.data || []);
-        setEvents(eventResponse.data || []);
-        setApiOffline(false);
-      })
-      .catch((error) => {
-        // An aborted request happens during route/app teardown and is not an API outage.
-        if (error.name !== 'AbortError') setApiOffline(true);
-      });
-
+    ]).then(([schemeResponse, updateResponse, eventResponse]) => {
+      setSchemes(schemeResponse.data || []);
+      setUpdates(updateResponse.data || []);
+      setEvents(eventResponse.data || []);
+      setApiOffline(false);
+    }).catch((error) => { if (error.name !== 'AbortError') setApiOffline(true); });
     return () => controller.abort();
   }, []);
 
   const runEligibility = useCallback(async (event) => {
     event.preventDefault();
     setEligibility(null);
-
     try {
-      const response = await fetch(`${API_BASE}/eligibility/check`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form)
-      });
+      const response = await fetch(`${API_BASE}/eligibility/check`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(form) });
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || 'Could not check your answers.');
       setEligibility(payload);
-    } catch (error) {
-      setEligibility({ error: error.message || 'Could not connect to the API.' });
-    }
+    } catch (error) { setEligibility({ error:error.message || 'Could not connect to the API.' }); }
   }, [form]);
 
   const subscribe = useCallback(async (event) => {
     event.preventDefault();
     setAlertMessage('');
-
     try {
-      const response = await fetch(`${API_BASE}/alerts/subscribe`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, language, categories: topics })
-      });
+      const response = await fetch(`${API_BASE}/alerts/subscribe`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ email, language, categories:topics }) });
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || 'Could not save preferences.');
       setAlertMessage(payload.message);
-    } catch (error) {
-      setAlertMessage(error.message || 'Could not connect to the API.');
-    }
+    } catch (error) { setAlertMessage(error.message || 'Could not connect to the API.'); }
   }, [email, language, topics]);
 
   const startCheck = useCallback((scheme) => {
-    setForm((current) => ({ ...current, schemeId: scheme.id }));
+    setForm((current) => ({ ...current, schemeId:scheme.id }));
     setSelectedScheme(null);
     setEligibility(null);
   }, []);
 
   const value = useMemo(() => ({
-    language, setLanguage, t, user, signIn, signOut,
-    schemes, updates, events, apiOffline,
-    selectedScheme, setSelectedScheme,
-    eligibility, setEligibility, form, setForm, runEligibility, startCheck,
+    language, setLanguage, t, user, signIn, signOut, schemes, updates, events, apiOffline,
+    selectedScheme, setSelectedScheme, eligibility, setEligibility, form, setForm, runEligibility, startCheck,
     email, setEmail, topics, setTopics, alertMessage, subscribe
-  }), [
-    language, t, user, signIn, signOut, schemes, updates, events, apiOffline, selectedScheme,
-    eligibility, form, runEligibility, startCheck, email, topics, alertMessage, subscribe
-  ]);
+  }), [language, setLanguage, t, user, signIn, signOut, schemes, updates, events, apiOffline, selectedScheme, eligibility, form, runEligibility, startCheck, email, topics, alertMessage, subscribe]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 
-// Fail fast with a helpful message if a component is mounted outside the provider.
 export function useApp() {
   const context = useContext(AppContext);
   if (!context) throw new Error('useApp must be used inside AppProvider.');

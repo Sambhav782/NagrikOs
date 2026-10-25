@@ -16,7 +16,7 @@ export default function Footer() {
       <div className="footer-links">
         <a href="https://www.india.gov.in/" target="_blank" rel="noreferrer">India.gov.in <ExternalLink size={12} /></a>
         <a href="https://www.myscheme.gov.in/" target="_blank" rel="noreferrer">myScheme <ExternalLink size={12} /></a>
-        <span>Made for citizens, with care.</span>
+        <span>{t.footerNote}</span>
       </div>
     </footer>
   );

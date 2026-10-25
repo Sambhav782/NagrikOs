@@ -37,7 +37,7 @@ export default function SchemeDetailsModal() {
         <button className="modal-close" onClick={() => setSelectedScheme(null)} aria-label={t.close}>
           <X size={19} />
         </button>
-        <span className="category-pill">{selectedScheme.category}</span>
+        <span className="category-pill">{t.categories?.[selectedScheme.category] || selectedScheme.category}</span>
         <h2 id="modal-title">{selectedScheme.name}</h2>
         <p>{selectedScheme.summary}</p>
         <div className="modal-benefit"><Sparkles size={17} /><span>{selectedScheme.benefits}</span></div>

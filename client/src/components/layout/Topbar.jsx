@@ -13,39 +13,26 @@ const routeLabels = {
   '/alerts': 'navAlerts'
 };
 
-// The topbar owns the sign-in dialog while shared session state lives in AppContext.
 export default function Topbar({ onMenuClick }) {
   const { pathname } = useLocation();
   const { language, setLanguage, t, user, signOut } = useApp();
   const [loginOpen, setLoginOpen] = useState(false);
-  const label = t[routeLabels[pathname]] || 'NagrikOS';
+  const label = pathname.startsWith('/news/') ? (language === 'hi' ? 'समाचार विवरण' : 'News details') : (t[routeLabels[pathname]] || 'NagrikOS');
 
   return (
     <>
       <header className="topbar">
-        <button className="mobile-menu" aria-label="Open navigation" onClick={onMenuClick}>
-          <Menu size={21} />
-        </button>
-        <div className="breadcrumbs">
-          <span>Workspace</span><span className="crumb-slash">/</span><strong>{label}</strong>
-        </div>
+        <button className="mobile-menu" aria-label="Open navigation" onClick={onMenuClick}><Menu size={21} /></button>
+        <div className="breadcrumbs"><span>{t.workspace}</span><span className="crumb-slash">/</span><strong>{label}</strong></div>
         <div className="topbar-actions">
-          <label className="language-switch">
-            <Globe2 size={16} /><span>{t.language}</span>
+          <label className="language-switch"><Globe2 size={16} /><span>{t.language}</span>
             <select value={language} onChange={(event) => setLanguage(event.target.value)} aria-label={t.language}>
               <option value="en">English</option>
               <option value="hi">हिन्दी</option>
             </select>
             <ChevronDown size={13} />
           </label>
-          {user ? (
-            <div className="signed-in-actions">
-              <span className="signed-in-name"><span className="avatar">{user.username.charAt(0).toUpperCase()}</span><span>{user.username}</span></span>
-              <button className="auth-button sign-out-button" onClick={signOut}><LogOut size={14} /><span>Sign out</span></button>
-            </div>
-          ) : (
-            <button className="auth-button sign-in-button" onClick={() => setLoginOpen(true)}><LogIn size={15} /> Sign in</button>
-          )}
+          {user ? <div className="signed-in-actions"><span className="signed-in-name"><span className="avatar">{user.username.charAt(0).toUpperCase()}</span><span>{user.username}</span></span><button className="auth-button sign-out-button" onClick={signOut}><LogOut size={14} /><span>{t.signOut}</span></button></div> : <button className="auth-button sign-in-button" onClick={() => setLoginOpen(true)}><LogIn size={15} /> {t.signIn}</button>}
         </div>
       </header>
       {loginOpen && <SignInModal onClose={() => setLoginOpen(false)} />}
