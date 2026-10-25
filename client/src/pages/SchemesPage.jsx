@@ -37,7 +37,7 @@ export default function SchemesPage() {
         <label className="filter-select-label">
           <span className="sr-only">{t.filterByCategory}</span>
           <select className="filter-button" value={category} onChange={(event) => setCategory(event.target.value)}>
-            {categories.map((item) => <option key={item} value={item}>{item === 'All' ? t.all : item}</option>)}
+            {categories.map((item) => <option key={item} value={item}>{item === 'All' ? t.all : (t.categories?.[item] || item)}</option>)}
           </select>
           <ChevronDown size={15} aria-hidden="true" />
         </label>
