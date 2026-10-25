@@ -151,7 +151,9 @@ export const translations = {
     changeTopicsAnytime: "You can change your selected topics any time.",
     pageNotFound: "We couldn't find that page.",
     pageNotFoundDetails: "The link may be outdated or the address may be incorrect.",
-    categories: { "Education": "Education", "Health": "Health", "Housing": "Housing", "Agriculture": "Agriculture", "Business": "Business", "Women & Family": "Women & Family", "Pension": "Pension" }
+    categories: { "Education": "Education", "Health": "Health", "Housing": "Housing", "Agriculture": "Agriculture", "Business": "Business", "Women & Family": "Women & Family", "Pension": "Pension" },
+    optional: "Optional",
+    personalizedForPrefix: "PERSONALISED FOR"
   },
   hi: {
     tagline: "सरकारी सेवाएँ, अब आसान।",
@@ -303,7 +305,9 @@ export const translations = {
     changeTopicsAnytime: "आप किसी भी समय चुने हुए विषय बदल सकते हैं।",
     pageNotFound: "यह पृष्ठ नहीं मिला।",
     pageNotFoundDetails: "लिंक पुराना हो सकता है या पता गलत हो सकता है।",
-    categories: { "Education": "शिक्षा", "Health": "स्वास्थ्य", "Housing": "आवास", "Agriculture": "कृषि", "Business": "व्यवसाय", "Women & Family": "महिलाएँ और परिवार", "Pension": "पेंशन" }
+    categories: { "Education": "शिक्षा", "Health": "स्वास्थ्य", "Housing": "आवास", "Agriculture": "कृषि", "Business": "व्यवसाय", "Women & Family": "महिलाएँ और परिवार", "Pension": "पेंशन" },
+    optional: "वैकल्पिक",
+    personalizedForPrefix: "इनके लिए व्यक्तिगत"
   },
   ta: {
     tagline: "பொதுச் சேவைகள், இனி எளிதாக.",
@@ -457,4 +461,6 @@ export const translations = {
     pageNotFoundDetails: "இணைப்பு பழையதாக இருக்கலாம் அல்லது முகவரி தவறாக இருக்கலாம்.",
     categories: { "Education": "கல்வி", "Health": "சுகாதாரம்", "Housing": "வீட்டுவசதி", "Agriculture": "விவசாயம்", "Business": "வணிகம்", "Women & Family": "பெண்கள் மற்றும் குடும்பம்", "Pension": "ஓய்வூதியம்" }
   }
-};
+};,
+    optional: "விருப்பத்திற்குரியது",
+    personalizedForPrefix: "தனிப்பயனாக்கப்பட்டது:"
