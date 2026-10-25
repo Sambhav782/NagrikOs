@@ -108,7 +108,7 @@ export default function EligibilityPage() {
                 <option value="student">{t.studentOccupation}</option><option value="farmer">{t.farmerOccupation}</option><option value="employed">{t.employedOccupation}</option><option value="self-employed">{t.selfEmployedOccupation}</option><option value="unemployed">{t.unemployedOccupation}</option><option value="other">{t.otherOccupation}</option>
               </select>
             </label>
-            <label className="field"><span>{t.income}</span><input type="number" min="0" placeholder="Optional" value={form.annualIncome} onChange={(event) => updateField('annualIncome', event.target.value)} /></label>
+            <label className="field"><span>{t.income}</span><input type="number" min="0" placeholder={t.optional} value={form.annualIncome} onChange={(event) => updateField('annualIncome', event.target.value)} /></label>
             <label className="field"><span>{t.home}</span>
               <select value={form.ownsHome} onChange={(event) => updateField('ownsHome', event.target.value)}><option value="no">{t.no}</option><option value="yes">{t.yes}</option><option value="unsure">{t.notSure}</option></select>
             </label>
@@ -155,7 +155,7 @@ export default function EligibilityPage() {
                             ))}
                           </div>
                         ) : (
-                          <p>{t.noCloseMatch} <Link to="/schemes">scheme directory</Link>.</p>
+                          <p>{t.noCloseMatch} <Link to="/schemes">{t.schemeDirectory}</Link>.</p>
                         )}
                       </div>
                     )}
