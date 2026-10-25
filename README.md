@@ -8,7 +8,8 @@ NagrikOS is a citizen-first public-service prototype that brings Indian governme
 
 ## Features in the current prototype
 
-- Responsive React interface with English/Hindi language selection
+- Responsive React interface with English, Hindi, and Tamil language selection
+- Language preference persists across page refreshes and updates the document language for accessibility
 - Scheme directory with search, category filters, summaries, requirements, and official links
 - Rule-based preliminary eligibility guidance, document checklists, and alternative scheme suggestions
 - Government Shorts/update feed with source links
@@ -18,6 +19,8 @@ NagrikOS is a citizen-first public-service prototype that brings Indian governme
 - Email and topic preference form for signed-out visitors; the API validates preferences but does **not** send email or store subscriptions
 - Express API health endpoint and curated data endpoints
 - No database or third-party API key required for local development
+
+> **Translation scope:** Shared interface labels and primary flows are translated. Curated scheme names, descriptions, and some informational copy supplied by the API remain in their original language until translated source records are added. Always refer to linked official sources for authoritative wording.
 
 ## Technology
 
