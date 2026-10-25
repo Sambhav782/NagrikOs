@@ -19,9 +19,31 @@ app.get('/api/health', (_req, res) => {
 app.get('/api/schemes', (req, res) => {
   const q = String(req.query.q || '').trim().toLowerCase();
   const category = String(req.query.category || 'All');
+  const targetGroup = String(req.query.targetGroup || 'All');
+  const residence = String(req.query.residence || 'All');
+  const benefitType = String(req.query.benefitType || 'All');
+  const age = req.query.age === undefined || req.query.age === '' ? null : Number(req.query.age);
+
+  if (age !== null && (!Number.isInteger(age) || age < 0 || age > 120)) {
+    return res.status(400).json({ error: 'Enter a valid age between 0 and 120.' });
+  }
+
   const results = schemes.filter((scheme) => {
-    const searchable = [scheme.name, scheme.summary, scheme.category, scheme.ministry, ...scheme.tags].join(' ').toLowerCase();
-    return (!q || searchable.includes(q)) && (category === 'All' || scheme.category === category);
+    const groups = scheme.targetGroups || scheme.audience || [];
+    const searchable = [
+      scheme.name, scheme.summary, scheme.benefits, scheme.category, scheme.ministry,
+      scheme.benefitType, ...(scheme.tags || []), ...groups,
+      ...(scheme.eligibility || []), ...(scheme.documents || [])
+    ].join(' ').toLowerCase();
+    const ageMatches = age === null
+      || ((scheme.ageMin === null || scheme.ageMin === undefined || age >= scheme.ageMin)
+        && (scheme.ageMax === null || scheme.ageMax === undefined || age <= scheme.ageMax));
+    return (!q || searchable.includes(q))
+      && (category === 'All' || scheme.category === category)
+      && (targetGroup === 'All' || groups.includes(targetGroup))
+      && (residence === 'All' || (scheme.residence || []).includes(residence))
+      && (benefitType === 'All' || scheme.benefitType === benefitType)
+      && ageMatches;
   });
   res.json({ data: results, total: results.length, mode: 'curated-demo-data' });
 });
