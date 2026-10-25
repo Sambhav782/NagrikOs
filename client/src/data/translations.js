@@ -469,6 +469,13 @@ export const translations = {
     changeTopicsAnytime: "தேர்ந்தெடுத்த தலைப்புகளை எந்த நேரத்திலும் மாற்றலாம்.",
     pageNotFound: "இந்தப் பக்கத்தைக் கண்டறிய முடியவில்லை.",
     pageNotFoundDetails: "இணைப்பு பழையதாக இருக்கலாம் அல்லது முகவரி தவறாக இருக்கலாம்.",
-    categories: { "Education": "கல்வி", "Health": "சுகாதாரம்", "Housing": "வீட்டுவசதி", "Agriculture": "விவசாயம்", "Business": "வணிகம்", "Women & Family": "பெண்கள் மற்றும் குடும்பம்", "Pension": "ஓய்வூதியம்" }
+    categories: { "Education": "கல்வி", "Health": "சுகாதாரம்", "Housing": "வீட்டுவசதி", "Agriculture": "விவசாயம்", "Business": "வணிகம்", "Women & Family": "பெண்கள் மற்றும் குடும்பம்", "Pension": "ஓய்வூதியம்" },
+    optional: "விருப்பத்திற்குரியது",
+    personalizedForPrefix: "தனிப்பயனாக்கப்பட்டது:",
+    eligibilityGuide: "தகுதி வழிகாட்டி",
+    stepByStepHelp: "படிப்படியான உதவி",
+    officialLinks: "அதிகாரப்பூர்வ இணைப்புகள்",
+    trustNotGuesswork: "ஊகம் அல்ல, நம்பகமான தகவல்",
+    potentialMatchesDisclaimer: "இவை சாத்தியமான பொருத்தங்கள் மட்டுமே; தகுதி உறுதி அல்ல. விண்ணப்பிக்கும் முன் தற்போதைய அதிகாரப்பூர்வ நிபந்தனைகளைச் சரிபார்க்கவும்."
   }
 };
