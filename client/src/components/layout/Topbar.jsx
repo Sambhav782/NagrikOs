@@ -27,7 +27,7 @@ export default function Topbar({ onMenuClick }) {
           <Menu size={21} />
         </button>
         <div className="breadcrumbs">
-          <span>Workspace</span><span className="crumb-slash">/</span><strong>{label}</strong>
+          <span>{t.workspace}</span><span className="crumb-slash">/</span><strong>{label}</strong>
         </div>
         <div className="topbar-actions">
           <label className="language-switch">
@@ -35,16 +35,17 @@ export default function Topbar({ onMenuClick }) {
             <select value={language} onChange={(event) => setLanguage(event.target.value)} aria-label={t.language}>
               <option value="en">English</option>
               <option value="hi">हिन्दी</option>
+              <option value="ta">தமிழ்</option>
             </select>
             <ChevronDown size={13} />
           </label>
           {user ? (
             <div className="signed-in-actions">
               <span className="signed-in-name"><span className="avatar">{user.username.charAt(0).toUpperCase()}</span><span>{user.username}</span></span>
-              <button className="auth-button sign-out-button" onClick={signOut}><LogOut size={14} /><span>Sign out</span></button>
+              <button className="auth-button sign-out-button" onClick={signOut}><LogOut size={14} /><span>{t.signOut}</span></button>
             </div>
           ) : (
-            <button className="auth-button sign-in-button" onClick={() => setLoginOpen(true)}><LogIn size={15} /> Sign in</button>
+            <button className="auth-button sign-in-button" onClick={() => setLoginOpen(true)}><LogIn size={15} /> {t.signIn}</button>
           )}
         </div>
       </header>
