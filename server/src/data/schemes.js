@@ -588,4 +588,59 @@ export const events = [
     description: 'A national cybersecurity and AI hackathon focused on evaluating human judgement in security assessment, rather than detection speed alone.',
     officialUrl: 'https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=2300120&lang=2&reg=48'
   }
-];
+,
+  {
+    id: 'event-smart-india-hackathon',
+    title: 'Smart India Hackathon',
+    dateLabel: 'Recurring national challenge · Check portal for next edition',
+    location: 'Participating institutions across India',
+    organizer: 'Ministry of Education · Innovation Cell',
+    category: 'Innovation & students',
+    status: 'Check official page',
+    description: 'Students work in teams to develop solutions to real-world problem statements shared by ministries, departments and industry partners.',
+    officialUrl: 'https://www.sih.gov.in/'
+  },
+  {
+    id: 'event-national-entrepreneurship-challenge',
+    title: 'Startup India learning and outreach programmes',
+    dateLabel: 'Programme calendar varies · Check official portal',
+    location: 'Online and across India',
+    organizer: 'Department for Promotion of Industry and Internal Trade',
+    category: 'Entrepreneurship',
+    status: 'Check official page',
+    description: 'Explore startup learning resources, ecosystem programmes and official announcements for founders and aspiring entrepreneurs.',
+    officialUrl: 'https://www.startupindia.gov.in/'
+  },
+  {
+    id: 'event-india-skills',
+    title: 'IndiaSkills Competition',
+    dateLabel: 'Competition cycle varies · Check official portal',
+    location: 'State and national-level venues',
+    organizer: 'Ministry of Skill Development and Entrepreneurship',
+    category: 'Skills & careers',
+    status: 'Check official page',
+    description: 'A national platform for young people to demonstrate vocational and technical skills across competition categories.',
+    officialUrl: 'https://www.skillindia.gov.in/'
+  },
+  {
+    id: 'event-national-science-day',
+    title: 'National Science Day programmes',
+    dateLabel: 'Observed annually on 28 February',
+    location: 'Schools, colleges and science institutions across India',
+    organizer: 'Department of Science and Technology',
+    category: 'Science & learning',
+    status: 'Annual programme',
+    description: 'Science institutions and educational organisations host talks, demonstrations and outreach activities around the annual observance. Check the official source for announced programmes.',
+    officialUrl: 'https://dst.gov.in/'
+  },
+  {
+    id: 'event-vigyan-sarvatra',
+    title: 'Science outreach and public engagement',
+    dateLabel: 'Activities vary by institution and date',
+    location: 'Across India',
+    organizer: 'Government science institutions and partner organisations',
+    category: 'Research & public learning',
+    status: 'Check official page',
+    description: 'Find public science talks, exhibitions and outreach announcements through government science and research institutions.',
+    officialUrl: 'https://www.indiascienceandtechnology.gov.in/'
+  }];
