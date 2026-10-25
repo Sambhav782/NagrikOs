@@ -42,51 +42,61 @@ export default function SchemesPage() {
         <span className="section-chip">{filteredSchemes.length} {t.schemeCountLabel}</span>
       </div>
 
-      <div className="search-filter-row">
-        <label className="search-box">
+      <div className="scheme-filter-panel">
+        <div className="scheme-filter-heading">
+          <div>
+            <span className="scheme-filter-eyebrow">PERSONALISED DISCOVERY</span>
+            <h3>Find schemes that fit you</h3>
+            <p>Search by need or narrow the list using the filters below.</p>
+          </div>
+          <button type="button" className="scheme-filter-reset" onClick={resetFilters} disabled={!query && category === 'All' && targetGroup === 'All' && residence === 'All' && benefitType === 'All'}>
+            <X size={14} /> Clear filters
+          </button>
+        </div>
+
+        <label className="search-box scheme-search-box">
           <Search size={18} />
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t.search} />
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search schemes, benefits, eligibility or documents..." />
           {query && <button type="button" onClick={() => setQuery('')} aria-label="Clear search"><X size={15} /></button>}
         </label>
-        <label className="filter-select-label">
-          <span className="sr-only">{t.filterByCategory}</span>
-          <select className="filter-button" value={category} onChange={(event) => setCategory(event.target.value)}>
-            {categories.map((item) => <option key={item} value={item}>{item === 'All' ? t.all : (t.categories?.[item] || item)}</option>)}
-          </select>
-          <ChevronDown size={15} aria-hidden="true" />
-        </label>
-        <label className="filter-select-label">
-          <span className="sr-only">Filter by beneficiary</span>
-          <select className="filter-button" value={targetGroup} onChange={(event) => setTargetGroup(event.target.value)}>
-            <option value="All">All beneficiaries</option>
-            {targetGroups.map((item) => <option key={item} value={item}>{item}</option>)}
-          </select>
-          <ChevronDown size={15} aria-hidden="true" />
-        </label>
-        <label className="filter-select-label">
-          <span className="sr-only">Filter by residence</span>
-          <select className="filter-button" value={residence} onChange={(event) => setResidence(event.target.value)}>
-            <option value="All">Any residence</option>
-            {residenceTypes.map((item) => <option key={item} value={item}>{item}</option>)}
-          </select>
-          <ChevronDown size={15} aria-hidden="true" />
-        </label>
-        <label className="filter-select-label">
-          <span className="sr-only">Filter by benefit type</span>
-          <select className="filter-button" value={benefitType} onChange={(event) => setBenefitType(event.target.value)}>
-            <option value="All">All benefit types</option>
-            {benefitTypes.map((item) => <option key={item} value={item}>{item}</option>)}
-          </select>
-          <ChevronDown size={15} aria-hidden="true" />
-        </label>
-      </div>
 
-      <div className="category-tabs" role="tablist" aria-label={t.schemeCategories}>
-        {categories.map((item) => (
-          <button key={item} type="button" role="tab" aria-selected={category === item} className={category === item ? 'selected' : ''} onClick={() => setCategory(item)}>
-            {item === 'All' ? t.all : item}
-          </button>
-        ))}
+        <div className="scheme-filter-grid">
+          <label className="scheme-filter-field">
+            <span>Scheme category</span>
+            <select value={category} onChange={(event) => setCategory(event.target.value)}>
+              {categories.map((item) => <option key={item} value={item}>{item === 'All' ? 'All categories' : (t.categories?.[item] || item)}</option>)}
+            </select>
+            <ChevronDown size={15} aria-hidden="true" />
+          </label>
+          <label className="scheme-filter-field">
+            <span>Who is it for?</span>
+            <select value={targetGroup} onChange={(event) => setTargetGroup(event.target.value)}>
+              <option value="All">All beneficiaries</option>
+              {targetGroups.map((item) => <option key={item} value={item}>{item}</option>)}
+            </select>
+            <ChevronDown size={15} aria-hidden="true" />
+          </label>
+          <label className="scheme-filter-field">
+            <span>Area of residence</span>
+            <select value={residence} onChange={(event) => setResidence(event.target.value)}>
+              <option value="All">Rural or urban</option>
+              {residenceTypes.map((item) => <option key={item} value={item}>{item}</option>)}
+            </select>
+            <ChevronDown size={15} aria-hidden="true" />
+          </label>
+          <label className="scheme-filter-field">
+            <span>Type of benefit</span>
+            <select value={benefitType} onChange={(event) => setBenefitType(event.target.value)}>
+              <option value="All">All benefit types</option>
+              {benefitTypes.map((item) => <option key={item} value={item}>{item}</option>)}
+            </select>
+            <ChevronDown size={15} aria-hidden="true" />
+          </label>
+        </div>
+        <div className="scheme-filter-results">
+          <span><strong>{filteredSchemes.length}</strong> schemes found</span>
+          <span>Use more than one filter to narrow your results.</span>
+        </div>
       </div>
 
       {filteredSchemes.length ? (
